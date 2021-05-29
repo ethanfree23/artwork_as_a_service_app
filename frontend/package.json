@@ -1,0 +1,35 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "prepare": "cd .. && husky install frontend/.husky",
+    "check-format": "prettier --check .",
+    "check-lint": "eslint . --ext ts --ext tsx --ext js",
+    "format": "prettier --write . --list-different",
+    "test-all": "npm run check-format && npm run check-lint && npm run check-types && npm run build"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.3.19",
+    "apollo-link": "^1.2.14",
+    "axios": "^0.21.1",
+    "import": "^0.0.6",
+    "next": "10.2.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.2.6",
+    "eslint": "^7.27.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-react": "^7.23.2",
+    "husky": "^6.0.0",
+    "postcss": "^8.3.0",
+    "prettier": "2.3.0",
+    "tailwindcss": "^2.1.2"
+  }
+}
