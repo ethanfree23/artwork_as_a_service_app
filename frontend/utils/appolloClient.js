@@ -1,13 +1,14 @@
 import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client"
 
 import { setContext } from "@apollo/client/link/context"
-import { onError } from "@apollo/client/link/error"
+// import { onError } from "@apollo/client/link/error"
 import { ApolloLink } from "apollo-link"
 
 import { useRouter } from "next/router"
+import { API } from "./api"
 
 const httpLink = createHttpLink({
-  uri: `${process.env.NEXT_PUBLIC_API_URL}/graphql` || "http://localhost:1337/graphql",
+  uri: `${API}/graphql`,
 })
 
 const authLink = setContext((_, { headers }) => {

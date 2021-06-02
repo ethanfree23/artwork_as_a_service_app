@@ -3,10 +3,9 @@ import * as Yup from "yup"
 import { omit } from "lodash"
 // import { v4 as uuidv4 } from 'uuid'
 
-import { useSubmit } from "components/form/useSubmit"
 import { useRegister } from "resources/auth"
 import { Button } from "components/ui"
-import { Field } from "components/form"
+import { Field, useSubmit } from "components/form"
 
 const RegisterForm = () => {
   const [register] = useRegister()

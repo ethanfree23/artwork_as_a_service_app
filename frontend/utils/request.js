@@ -1,6 +1,7 @@
 import axios from "axios"
+import { API } from "./api"
 
 export const request = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337/graphql",
+  baseURL: `${API}/graphql`,
   withCredentials: true,
 })
