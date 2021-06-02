@@ -7,7 +7,7 @@ const Section = ({ contentClassName, contentProps, className, backgroundImage, c
       className={cns("relative", className)}
       style={{
         backgroundImage: backgroundImage && `url(${backgroundImage})`,
-        backgroundPosition: backgroundImage && "center",
+        backgroundPosition: backgroundImage && "bg-cover bg-center",
       }}
       {...props}
     >
