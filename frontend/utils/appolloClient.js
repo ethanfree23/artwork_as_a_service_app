@@ -7,7 +7,7 @@ import { ApolloLink } from "apollo-link"
 import { useRouter } from "next/router"
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:1337/graphql",
+  uri: `${process.env.NEXT_PUBLIC_API_URL}/graphql` || "http://localhost:1337/graphql",
 })
 
 const authLink = setContext((_, { headers }) => {
