@@ -1,3 +1,16 @@
 @tailwind base;
+
+body {
+  @apply font-montserrat min-h-screen;
+}
+
+#__next {
+  @apply min-h-screen flex flex-col;
+}
+
+main {
+  @apply min-h-full flex-1;
+}
+
 @tailwind components;
 @tailwind utilities;

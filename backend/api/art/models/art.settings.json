@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "art",
+  "info": {
+    "name": "art",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "quantity": {
+      "type": "integer"
+    },
+    "artist": {
+      "model": "artists",
+      "via": "arts"
+    }
+  }
+}

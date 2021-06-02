@@ -1,7 +1,7 @@
 import { ApolloProvider } from "@apollo/client"
 import { createApolloClient } from "utils/appolloClient"
 
-import { Navbar } from "components/app"
+import { Footer, Navbar } from "components/app"
 
 import "../styles/globals.css"
 
@@ -10,6 +10,7 @@ function MyApp({ Component, pageProps }) {
     <ApolloProvider client={createApolloClient()}>
       <Navbar />
       <Component {...pageProps} />
+      <Footer />
     </ApolloProvider>
   )
 }

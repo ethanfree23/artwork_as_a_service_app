@@ -2,48 +2,48 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/podcasts",
-      "handler": "podcast.find",
+      "path": "/artists",
+      "handler": "artists.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/podcasts/count",
-      "handler": "podcast.count",
+      "path": "/artists/count",
+      "handler": "artists.count",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/podcasts/:id",
-      "handler": "podcast.findOne",
+      "path": "/artists/:id",
+      "handler": "artists.findOne",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/podcasts",
-      "handler": "podcast.create",
+      "path": "/artists",
+      "handler": "artists.create",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/podcasts/:id",
-      "handler": "podcast.update",
+      "path": "/artists/:id",
+      "handler": "artists.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/podcasts/:id",
-      "handler": "podcast.delete",
+      "path": "/artists/:id",
+      "handler": "artists.delete",
       "config": {
         "policies": []
       }
