@@ -13,6 +13,7 @@ const Section = ({
   children,
   ...props
 }) => {
+  // TODO: Allow custom components with AnimateOnReveal
   const [passRef, inView] = useInView({ threshold: 0.2, triggerOnce: true })
 
   const container = {
