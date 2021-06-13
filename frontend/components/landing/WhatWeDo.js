@@ -1,4 +1,6 @@
 import { Section } from "components/app"
+import { AnimateOnReveal, AnimatedItem } from "components/utils"
+
 import { ConnectIcon, FinanceIcon, LikesIcon, PartnerIcon, RotateIcon, SellIcon } from "assets/icons"
 
 const WHAT_WE_DO = [
@@ -35,7 +37,7 @@ const WHAT_WE_DO = [
 ]
 
 const WhatWeDoItem = ({ item: { icon: Icon, title, description } }) => (
-  <div className="flex gap-8">
+  <AnimatedItem className="flex gap-8">
     <div className="flex-1">
       <Icon className="text-blue" />
     </div>
@@ -43,13 +45,17 @@ const WhatWeDoItem = ({ item: { icon: Icon, title, description } }) => (
       <h4 className="text-lg font-bold mb-2">{title}</h4>
       <p className="text-grey-600">{description}</p>
     </div>
-  </div>
+  </AnimatedItem>
 )
 
 const WhatWeDo = () => {
   return (
-    <Section>
-      <h2 className="text-4xl uppercase font-bold text-center">What we do</h2>
+    <Section animateOnReveal>
+      {/* <AnimatedItem> */}
+      <AnimatedItem as="h2" className="text-4xl uppercase font-bold text-center">
+        What we do
+      </AnimatedItem>
+      {/* </AnimatedItem> */}
       <div className="mt-16 grid grid-cols-3 gap-16">
         {WHAT_WE_DO.map((item, index) => (
           <WhatWeDoItem key={index} item={item} />
