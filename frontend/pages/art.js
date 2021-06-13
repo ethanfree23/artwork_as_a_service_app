@@ -1,27 +1,6 @@
 import { gql, useQuery } from "@apollo/client"
 import { Page, Section } from "components/app"
 
-const artistsQuery = gql`
-  {
-    artists {
-      fullName
-    }
-  }
-`
-
-const artQuery = gql`
-  {
-    arts {
-      title
-      quantity
-      description
-      artist {
-        fullName
-      }
-    }
-  }
-`
-
 const Art = () => {
   const { data: artistsData } = useQuery(artistsQuery)
   const { data: artData } = useQuery(artQuery)
@@ -51,3 +30,24 @@ const Art = () => {
 }
 
 export default Art
+
+const artistsQuery = gql`
+  {
+    artists {
+      fullName
+    }
+  }
+`
+
+const artQuery = gql`
+  {
+    arts {
+      title
+      quantity
+      description
+      artist {
+        fullName
+      }
+    }
+  }
+`
