@@ -1,4 +1,4 @@
-export { default as Artists } from "./Artists"
-export { default as Market } from "./Market"
-export { default as About } from "./About"
-export { default as Features } from "./Features"
+export { default as ArtistsTitle } from "./artists.svg"
+export { default as MarketTitle } from "./market.svg"
+export { default as AboutUsTitle } from "./about-us.svg"
+export { default as FeaturesTitle } from "./features.svg"

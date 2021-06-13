@@ -2,10 +2,11 @@ import { useState } from "react"
 
 import { Page, Section } from "components/app"
 import { LoginForm, RegisterForm } from "components/auth"
-import { Header } from "components/landing"
-import { Button } from "components/ui"
 
-import { Artists, Market, About, Features } from "assets/titles"
+import { Button } from "components/ui"
+import { Header, AboutUs, WhatWeDo, Features } from "components/landing"
+
+import { ArtistsTitle, MarketTitle } from "assets/titles"
 
 export default function Home() {
   const [isRegisterForm, setIsRegisterForm] = useState(true)
@@ -14,10 +15,10 @@ export default function Home() {
     <>
       <Page>
         <Header />
-        <Section>
+        <Section contentClassName="pt-4">
           <div className="flex flex-col items-center mb-12">
             <h3 className="text-xl font-bold uppercase mb-2">Meet the</h3>
-            <Artists className="text-pink" />
+            <ArtistsTitle className="text-pink" />
           </div>
           <div className="grid gap-10 grid-cols-3">
             <div className="w-full h-24 bg-grey"></div>
@@ -28,7 +29,7 @@ export default function Home() {
         <Section className="bg-black text-white">
           <div className="flex flex-col items-center mb-12">
             <h3 className="text-xl font-bold uppercase mb-2">Art on the</h3>
-            <Market className="text-pink" />
+            <MarketTitle className="text-pink" />
           </div>
           <div className="grid gap-10 grid-cols-5">
             <div className="w-full h-24 bg-grey"></div>
@@ -38,43 +39,9 @@ export default function Home() {
             <div className="w-full h-24 bg-grey"></div>
           </div>
         </Section>
-        <Section
-          className="bg-bottom bg-cover"
-          contentClassName="text-white flex flex-col items-center text-center pb-48"
-          backgroundImage="backgrounds/landing-about-bg.svg"
-        >
-          <About />
-          <p className="max-w-lg mt-8 font-semibold">
-            “Our mission is to bring art to everyone, not hide it away in a gallery. We revolutionize how art is
-            pucharsed by connecting artists with collectors.”
-          </p>
-          <div className="flex justify-around gap-12 max-w-xl mt-14">
-            <div className="flex flex-col">
-              ICON
-              <h3 className="text-lg font-bold uppercase mt-1 mb-2">Artists</h3>
-              <p className="text-sm">
-                Use our technology to magnify your exposure to collectors and increase your sales.
-              </p>
-            </div>
-            <div className="flex flex-col">
-              ICON
-              <h3 className="text-lg font-bold uppercase mt-1 mb-2">Collectors</h3>
-              <p className="text-sm">
-                Use our technology to magnify your exposure to collectors and increase your sales.
-              </p>
-            </div>
-          </div>
-        </Section>
-        <Section>
-          <h2 className="text-4xl uppercase font-bold text-center">What we do</h2>
-        </Section>
-        <Section
-          className="bg-top bg-cover pt-24"
-          contentClassName="text-white flex flex-col items-center"
-          backgroundImage="backgrounds/landing-features-bg.svg"
-        >
-          <Features />
-        </Section>
+        <AboutUs />
+        <WhatWeDo />
+        <Features />
         <Section backgroundImage={"/backgrounds/landing-register-bg.png"} contentClassName="flex flex-col items-center">
           <div className="bg-white p-12 rounded-xl max-w-md flex flex-col items-center">
             {isRegisterForm ? (

@@ -11,8 +11,12 @@ module.exports = {
           DEFAULT: "#FE00C6",
           600: "#F102BC",
         },
+        blue: {
+          DEFAULT: "#2F80ED",
+        },
         grey: {
           DEFAULT: "#C9C9D8",
+          600: "#666666",
         },
       },
       zIndex: {
