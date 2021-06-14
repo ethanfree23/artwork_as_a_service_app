@@ -7,6 +7,8 @@ export { default as LikesIcon } from "./likes.svg"
 export { default as PartnerIcon } from "./partner.svg"
 export { default as RotateIcon } from "./rotate.svg"
 export { default as SellIcon } from "./sell.svg"
+export { default as PlayIcon } from "./play.svg"
+export { default as LocationIcon } from "./location.svg"
 
 export { default as PalettePolygonIcon } from "./palette-polygon.svg"
 export { default as MoneyPolygonIcon } from "./money-polygon.svg"

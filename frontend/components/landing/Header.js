@@ -5,11 +5,9 @@ const Header = () => {
   return (
     <header
       className="relative bg-bottom bg-cover"
-      style={{ backgroundImage: "url(backgrounds/landing-header-bg.svg)" }}
+      style={{ backgroundImage: "url(/backgrounds/landing-header-bg.svg)" }}
     >
-      <div
-        className={cns("max-w-screen-xl box-content mx-auto px-8 pt-12 pb-20 text-center flex flex-col items-center")}
-      >
+      <div className={cns("content px-8 pt-12 pb-20 text-center flex flex-col items-center")}>
         <h1 as="h1" className="text-4xl text-white font-semibold">
           The Modern Way to Gallery
         </h1>

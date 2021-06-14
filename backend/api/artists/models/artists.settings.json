@@ -28,6 +28,17 @@
     "arts": {
       "via": "artist",
       "collection": "art"
+    },
+    "video": {
+      "type": "component",
+      "repeatable": false,
+      "component": "common.video"
+    },
+    "bio": {
+      "type": "text"
+    },
+    "location": {
+      "type": "string"
     }
   }
 }

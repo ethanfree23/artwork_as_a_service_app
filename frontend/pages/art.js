@@ -11,7 +11,11 @@ const Art = () => {
         <h1>Artists</h1>
         <ul>
           {artistsData?.artists?.map((artist, index) => (
-            <li key={index}>{artist?.fullName}</li>
+            <li key={index}>
+              {/* {artist?.fullName}
+              {artist.avatar.url} */}
+              <img src={artist.avatar.url} />
+            </li>
           ))}
         </ul>
       </Section>
@@ -35,6 +39,9 @@ const artistsQuery = gql`
   {
     artists {
       fullName
+      avatar {
+        url
+      }
     }
   }
 `
