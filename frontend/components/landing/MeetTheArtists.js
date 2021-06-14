@@ -5,10 +5,10 @@ import Link from "next/link"
 import { Video } from "components/artist"
 
 const MeetTheArtists = () => {
-  const { loading, error, data } = useQuery(artistsQuery)
+  const { data } = useQuery(artistsQuery)
 
-  console.log("data", data)
   const topArtists = data?.artists.slice(0, 3)
+
   return (
     <Section contentClassName="pt-4">
       <div className="flex flex-col items-center mb-12">
