@@ -22,8 +22,24 @@
       "type": "integer"
     },
     "artist": {
-      "model": "artists",
-      "via": "arts"
+      "via": "arts",
+      "model": "artists"
+    },
+    "images": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "price": {
+      "type": "integer"
+    },
+    "dimensions": {
+      "type": "string"
     }
   }
 }

@@ -12,5 +12,9 @@ main {
   @apply min-h-full flex-1;
 }
 
+.content {
+  @apply max-w-screen-xl box-border mx-auto px-12;
+}
+
 @tailwind components;
 @tailwind utilities;

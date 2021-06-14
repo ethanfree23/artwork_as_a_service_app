@@ -41,7 +41,7 @@ const Section = ({
       {...animatedProps}
       {...props}
     >
-      <div className={cns("max-w-screen-xl box-content mx-auto px-8 py-20", contentClassName)} {...contentProps}>
+      <div className={cns("content py-20", contentClassName)} {...contentProps}>
         {children}
       </div>
     </Element>
