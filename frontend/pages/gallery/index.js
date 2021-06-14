@@ -13,9 +13,11 @@ const Gallery = () => {
           <h3 className="text-xl font-bold uppercase mb-2">Meet the</h3>
           <ArtistsTitle className="text-pink" />
         </div>
-        {artistsData?.artists?.map((artist, index) => (
-          <FeaturedGallery key={index} artist={artist} />
-        ))}
+        <div className="space-y-20">
+          {artistsData?.artists?.map((artist, index) => (
+            <FeaturedGallery key={index} artist={artist} />
+          ))}
+        </div>
       </Section>
     </Page>
   )
