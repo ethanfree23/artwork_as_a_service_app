@@ -1,1 +1,57 @@
 .DS_Store
+
+# FRONTEND
+# dependencies
+/frontend/node_modules
+/frontend/.pnp
+.pnp.js
+
+# testing
+/frontend/coverage
+
+# next.js
+/frontend/.next/
+/frontend/out/
+
+# production
+/frontend/build
+
+# misc
+/frontend/.DS_Store
+*.pem
+
+# local env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# vercel
+/frontend/.vercel
+
+# BACKEND
+
+/backend/node_modules
+/backend/.env
+/backend/license.txt
+/backend/exports
+/backend/*.cache
+/backend/build
+/backend/.strapi-updater.json
+
+/backend/.DS_Store
+/backend/.AppleDouble
+/backend/.LSOverride
+/backend/Icon
+/backend/.Spotlight-V100
+/backend/.Trashes
+/backend/._*
+
+/backend/Thumbs.db
+/backend/ehthumbs.db
+/backend/Desktop.ini
+/backend/$RECYCLE.BIN/
+/backend/*.cab
+/backend/*.msi
+/backend/*.msm
+/backend/*.msp
