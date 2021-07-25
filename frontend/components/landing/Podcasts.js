@@ -1,14 +1,10 @@
-import { useContext, useState } from "react"
-import { gql, useQuery } from "@apollo/client"
+import { useContext } from "react"
 import { Section } from "components/app"
-import { ArtistsTitle, MarketTitle } from "assets/titles"
-import { Image } from "components/ui"
-import ReactPlayer from "react-player"
+import { ArtistsTitle } from "assets/titles"
 import { AudioPlayerContext } from "pages/_app"
+import { PauseIcon, PlayIcon } from "assets/icons"
 
-const Podcasts = () => {
-  const [currentAudio, setCurrentAudio] = useState(null)
-  const { loading, error, data } = useQuery(podcastsQuery)
+const Podcasts = ({ podcasts }) => {
   const { audio, dispatch } = useContext(AudioPlayerContext)
 
   return (
@@ -18,35 +14,46 @@ const Podcasts = () => {
         <ArtistsTitle className="text-pink" />
       </div>
       <div className="grid gap-10 grid-cols-2">
-        {data?.podcasts?.map((podcast, index) => (
-          <div
-            key={index}
-            onClick={() => {
-              const audio = { url: podcast.link }
-              dispatch({ type: "play", ...audio })
-            }}
-          >
-            <h2 className="text-xl">{podcast.title}</h2>
-            <p>{podcast.description}</p>
-          </div>
-        ))}
-        {/* <ReactPlayer url={currentAudio} autoplay playing={true} /> */}
+        {podcasts?.map((podcast, index) => {
+          const isPlaying = audio.url === podcast.link && audio.isPlaying
+          return (
+            <div
+              key={index}
+              className="border-2 border-pink rounded-lg py-6 px-8 flex items-center space-x-8"
+              title={podcast.description}
+              onClick={() => {
+                const audio = { url: podcast.link }
+                isPlaying ? dispatch({ type: "pause" }) : dispatch({ type: "play", ...audio })
+              }}
+            >
+              <button className="border-2 border-pink rounded-full w-12 h-12 flex-shrink-0 flex items-center justify-center focus:outline-none">
+                {isPlaying ? <PauseIcon className="w-5 h-5" /> : <PlayIcon className="w-5 h-5 ml-1" />}
+              </button>
+              <div className="space-y-2">
+                <h2 className="text-xl font-bold">{podcast.title}</h2>
+                <p className="line-clamp-2">{podcast.description}</p>
+              </div>
+            </div>
+          )
+        })}
       </div>
     </Section>
   )
 }
 
+// export default Videos
+
 export default Podcasts
 
-const podcastsQuery = gql`
-  query Query {
-    podcasts {
-      title
-      description
-      link
-      file {
-        url
-      }
-    }
-  }
-`
+// const podcastsQuery = gql`
+//   query Query {
+//     podcasts {
+//       title
+//       description
+//       link
+//       file {
+//         url
+//       }
+//     }
+//   }
+// `

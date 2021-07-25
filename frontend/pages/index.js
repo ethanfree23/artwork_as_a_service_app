@@ -6,15 +6,15 @@ import { WaitlistForm } from "components/auth"
 
 // import { Button } from "components/ui"
 import { Header, MeetTheArtists, AboutUs, WhatWeDo, Features, Podcasts } from "components/landing"
+import { gql, useQuery } from "utils/appolloClient"
 
-export default function Home() {
+const Home = ({ artists, podcasts }) => {
   // const [isRegisterForm, setIsRegisterForm] = useState(true)
-
   return (
     <Page>
       <Header />
-      <MeetTheArtists />
-      <Podcasts />
+      <MeetTheArtists artists={artists} />
+      <Podcasts podcasts={podcasts} />
       {/* <ArtOnTheMarket /> */}
       <AboutUs />
       <WhatWeDo />
@@ -52,3 +52,46 @@ export default function Home() {
     </Page>
   )
 }
+
+export async function getStaticProps() {
+  const query = gql`
+    query Query {
+      artists(limit: 3) {
+        id
+        fullName
+        location
+        avatar {
+          url
+        }
+        video {
+          thumbnail {
+            url
+          }
+        }
+        arts {
+          title
+          images {
+            url
+          }
+        }
+      }
+      podcasts {
+        title
+        description
+        link
+        file {
+          url
+        }
+      }
+    }
+  `
+
+  const { data } = await useQuery(query)
+
+  return {
+    props: data,
+    revalidate: 5,
+  }
+}
+
+export default Home

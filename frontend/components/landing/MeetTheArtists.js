@@ -1,15 +1,10 @@
-import { gql, useQuery } from "@apollo/client"
 import { Section } from "components/app"
 import { ArtistsTitle } from "assets/titles"
 import Link from "next/link"
 import { Video } from "components/artist"
 import { Image } from "components/ui"
 
-const MeetTheArtists = () => {
-  const { data } = useQuery(artistsQuery)
-
-  const topArtists = data?.artists.slice(0, 3)
-
+const MeetTheArtists = ({ artists }) => {
   return (
     <Section contentClassName="pt-4">
       <div className="flex flex-col items-center mb-12">
@@ -17,7 +12,7 @@ const MeetTheArtists = () => {
         <ArtistsTitle className="text-pink" />
       </div>
       <div className="grid gap-10 grid-cols-3 h-96">
-        {topArtists?.map((artist, index) => (
+        {artists?.map((artist, index) => (
           <Link key={index} href={`/gallery/${artist.id}`}>
             <div className="grid grid-cols-2 gap-2 overflow-hidden cursor-pointer">
               <Video className="flex-1" video={artist.video} />
@@ -37,27 +32,3 @@ const MeetTheArtists = () => {
 }
 
 export default MeetTheArtists
-
-const artistsQuery = gql`
-  {
-    artists {
-      id
-      fullName
-      location
-      avatar {
-        url
-      }
-      video {
-        thumbnail {
-          url
-        }
-      }
-      arts {
-        title
-        images {
-          url
-        }
-      }
-    }
-  }
-`

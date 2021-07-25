@@ -23,8 +23,22 @@ const FEATURES = [
   },
 ]
 
+const featureItem = {
+  hidden: { opacity: 0, y: 200 },
+  show: { opacity: 1, y: 0 },
+}
+
 const Feature = ({ feature: { icon: Icon, title, description } }) => (
-  <AnimatedItem className="flex flex-col items-center text-center">
+  <AnimatedItem
+    className="flex flex-col items-center text-center"
+    variants={featureItem}
+    transition={{
+      type: "spring",
+      damping: 10,
+      mass: 0.75,
+      stiffness: 100,
+    }}
+  >
     <Icon />
     <h4 className="mt-4 mb-2 font-bold text-lg">{title}</h4>
     <p>{description}</p>

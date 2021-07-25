@@ -1,4 +1,4 @@
-import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client"
+import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache, gql } from "@apollo/client"
 
 import { setContext } from "@apollo/client/link/context"
 // import { onError } from "@apollo/client/link/error"
@@ -47,3 +47,17 @@ export function createApolloClient() {
     cache: new InMemoryCache(),
   })
 }
+
+export const client = new ApolloClient({
+  uri: `${API}/graphql`,
+  cache: new InMemoryCache(),
+})
+
+export const useQuery = async (query, variables) => {
+  return await client.query({
+    query: query,
+    variables: variables,
+  })
+}
+
+export { gql }

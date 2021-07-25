@@ -1,50 +1,43 @@
 import React from "react"
 import cns from "classnames"
-
-import { useInView } from "react-intersection-observer"
 import { motion } from "framer-motion"
+import { useAnimateOnInView, container } from "components/utils/AnimateOnReveal"
+
+const SectionElement = ({ animateOnReveal, threshold, children, ...rest }) => {
+  const { ref, controls } = useAnimateOnInView({ threshold })
+
+  return animateOnReveal ? (
+    <motion.section ref={ref} variants={container} initial="hidden" animate={controls} {...rest}>
+      {children}
+    </motion.section>
+  ) : (
+    <section {...rest}>{children}</section>
+  )
+}
 
 const Section = ({
   contentClassName,
   contentProps,
   className,
   backgroundImage,
+  backgroundPosition = "bg-center",
   animateOnReveal = false,
   children,
   ...props
 }) => {
-  // TODO: Allow custom components with AnimateOnReveal
-  const [passRef, inView] = useInView({ threshold: 0.2, triggerOnce: true })
-
-  const container = {
-    hidden: {},
-    show: {
-      transition: {
-        staggerChildren: 0.15,
-      },
-    },
-  }
-
-  const Element = animateOnReveal ? motion.section : "section"
-
-  const animatedProps = animateOnReveal
-    ? { ref: passRef, variants: container, initial: "hidden", animate: inView ? "show" : "hidden" }
-    : {}
-
   return (
-    <Element
-      className={cns("relative", className)}
+    <SectionElement
+      animateOnReveal={animateOnReveal}
+      className={cns("relative", className, backgroundImage && "bg-cover", backgroundImage && backgroundPosition)}
       style={{
         backgroundImage: backgroundImage && `url(${backgroundImage})`,
-        backgroundPosition: backgroundImage && "bg-cover bg-center",
       }}
-      {...animatedProps}
       {...props}
     >
       <div className={cns("content py-20", contentClassName)} {...contentProps}>
         {children}
       </div>
-    </Element>
+    </SectionElement>
   )
 }
 

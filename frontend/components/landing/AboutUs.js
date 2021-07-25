@@ -7,7 +7,8 @@ import { AboutUsTitle } from "assets/titles"
 const AboutUs = () => {
   return (
     <Section
-      className="bg-bottom bg-cover"
+      className="bg-cover"
+      backgroundPosition="bg-bottom"
       contentClassName="text-white flex flex-col items-center text-center pb-48"
       backgroundImage="backgrounds/landing-about-bg.svg"
       animateOnReveal

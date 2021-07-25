@@ -7,10 +7,10 @@ const AudioPlayer = () => {
 
   return (
     audio.url && (
-      <div className="fixed bottom-0 w-full bg-pink-700 text-white">
-        {audio.url}
-        <ReactPlayer url={audio.url} autoplay playing className="hidden" />
-      </div>
+      // <div className="fixed bottom-0 w-full bg-pink-700 text-white">
+      //   {audio.url}
+      <ReactPlayer url={audio.url} autoPlay playing={audio.isPlaying} className="hidden" />
+      // </div>
     )
   )
 }

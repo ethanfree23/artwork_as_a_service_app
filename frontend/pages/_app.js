@@ -13,6 +13,11 @@ export const GlobalContext = createContext({})
 
 export const AudioPlayerContext = createContext()
 
+const audioInitialState = {
+  url: null,
+  isPlaying: false,
+}
+
 // TODO: Put somewhere else
 const reducer = (state, action) => {
   switch (action.type) {
@@ -20,11 +25,18 @@ const reducer = (state, action) => {
       return {
         ...state,
         url: action.url,
+        isPlaying: true,
+      }
+    case "pause":
+      return {
+        ...state,
+        isPlaying: false,
       }
     case "close":
       return {
         ...state,
         url: null,
+        isPlaying: false,
       }
     default:
       return state
@@ -33,7 +45,7 @@ const reducer = (state, action) => {
 
 function MyApp({ Component, pageProps }) {
   const { global } = pageProps
-  const [audio, dispatch] = useReducer(reducer, { url: null })
+  const [audio, dispatch] = useReducer(reducer, audioInitialState)
 
   return (
     <ApolloProvider client={createApolloClient()}>

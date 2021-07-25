@@ -1,34 +1,40 @@
-import React from "react"
-
+import React, { useEffect } from "react"
 import { useInView } from "react-intersection-observer"
-import { motion } from "framer-motion"
+import { motion, useAnimation } from "framer-motion"
 
-const AnimateOnReveal = ({ className, children, as = "div", ...rest }) => {
-  const [passRef, inView] = useInView({ threshold: 0.2, triggerOnce: true })
+export const useAnimateOnInView = ({ threshold = 0.2 }) => {
+  const controls = useAnimation()
+  const { ref, inView } = useInView({ threshold, triggerOnce: true })
 
-  const container = {
-    hidden: {},
-    show: {
-      transition: {
-        staggerChildren: 0.15,
-        when: "beforeChildren",
-      },
+  useEffect(() => {
+    if (inView) {
+      controls.start("show")
+    }
+    if (!inView) {
+      controls.start("hidden")
+    }
+  }, [controls, inView])
+
+  return { ref, controls }
+}
+
+export const container = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.15,
+      when: "beforeChildren",
     },
-  }
+  },
+}
 
-  const Element = motion(as)
+const AnimateOnReveal = ({ className, children, ...rest }) => {
+  const { ref, controls } = useAnimateOnInView({})
 
   return (
-    <Element
-      ref={passRef}
-      variants={container}
-      initial="hidden"
-      animate={inView ? "show" : "hidden"}
-      className={className}
-      {...rest}
-    >
+    <motion.div ref={ref} variants={container} initial="hidden" animate={controls} className={className} {...rest}>
       {children}
-    </Element>
+    </motion.div>
   )
 }
 

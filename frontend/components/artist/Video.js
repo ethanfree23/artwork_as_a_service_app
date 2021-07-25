@@ -7,7 +7,7 @@ const Video = ({ video, className }) => {
       style={{ backgroundImage: `url(${video?.thumbnail?.url})` }}
       className={cns("bg-cover bg-center flex justify-center items-center cursor-pointer", className)}
     >
-      <PlayIcon />
+      <PlayIcon className="w-12 h-12" />
     </div>
   )
 }
