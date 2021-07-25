@@ -33,7 +33,6 @@ const reducer = (state, action) => {
 
 function MyApp({ Component, pageProps }) {
   const { global } = pageProps
-
   const [audio, dispatch] = useReducer(reducer, { url: null })
 
   return (
