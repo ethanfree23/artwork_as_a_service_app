@@ -3,6 +3,7 @@ import { Section } from "components/app"
 import { ArtistsTitle } from "assets/titles"
 import Link from "next/link"
 import { Video } from "components/artist"
+import { Image } from "components/ui"
 
 const MeetTheArtists = () => {
   const { data } = useQuery(artistsQuery)
@@ -23,11 +24,7 @@ const MeetTheArtists = () => {
               <div className="flex-1 flex flex-col gap-2 overflow-hidden">
                 {artist?.arts?.slice(0, 3)?.map((art, index) => (
                   <div key={index} className="flex-1 overflow-hidden">
-                    <img
-                      src={art?.images[0]?.url}
-                      alt="art"
-                      className="flex-1 h-full w-full object-cover object-center"
-                    />
+                    <Image src={art?.images[0]?.url} alt="art" className="flex-1 h-full w-full" />
                   </div>
                 ))}
               </div>

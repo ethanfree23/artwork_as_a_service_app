@@ -15,6 +15,7 @@
   "dependencies": {
     "@apollo/client": "^3.3.19",
     "@svgr/webpack": "^5.5.0",
+    "@tailwindcss/jit": "^0.1.18",
     "apollo-link": "^1.2.14",
     "axios": "^0.21.1",
     "classnames": "^2.2.6",
@@ -22,10 +23,11 @@
     "framer-motion": "^4.1.17",
     "graphql": "^15.5.0",
     "import": "^0.0.6",
-    "next": "10.0.3",
+    "next": "^11.0.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-intersection-observer": "^8.32.0",
+    "react-player": "^2.9.0",
     "uuid": "^8.3.2",
     "yup": "^0.32.9"
   },

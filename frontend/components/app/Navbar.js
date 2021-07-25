@@ -15,7 +15,7 @@ const Navbar = () => {
             <Logo className="h-8" />
           </a>
         </Link>
-        <div className="flex items-center space-x-12">
+        {/* <div className="flex items-center space-x-12">
           <Button href="/gallery" theme="grey" isLink>
             Artists
           </Button>
@@ -32,7 +32,7 @@ const Navbar = () => {
               </>
             )}
           </div>
-        </div>
+        </div> */}
       </div>
     </nav>
   )

@@ -1,10 +1,10 @@
 import { gql, useQuery } from "@apollo/client"
 import { Section } from "components/app"
 import { MarketTitle } from "assets/titles"
+import { Image } from "components/ui"
 
 const ArtOnTheMarket = () => {
   const { loading, error, data } = useQuery(artistsQuery)
-  console.log("data", data)
 
   return (
     <Section className="bg-black text-white">
@@ -15,7 +15,7 @@ const ArtOnTheMarket = () => {
       <div className="grid gap-10 grid-cols-4">
         {data?.artists.map((artist, index) => (
           <div className="col-span-1 w-full h-96 overflow-hidden flex flex-col gap-2" key="index">
-            <img src={artist?.arts[0]?.images[0]?.url} alt="art" className="flex-1 w-full object-cover object-center" />
+            <Image src={artist?.arts[0]?.images[0]?.url} alt="art" className="flex-1 w-full" layout="fill" />
             <div>
               <h4 className="uppercase font-semibold truncate">{artist?.arts[0]?.title}</h4>
             </div>
