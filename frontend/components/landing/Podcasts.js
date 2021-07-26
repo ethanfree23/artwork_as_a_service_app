@@ -22,7 +22,7 @@ const Podcasts = ({ podcasts }) => {
               className="border-2 border-pink rounded-lg py-6 px-8 flex items-center space-x-8"
               title={podcast.description}
               onClick={() => {
-                const audio = { url: podcast.link }
+                const audio = { url: podcast.link, title: podcast.title }
                 isPlaying ? dispatch({ type: "pause" }) : dispatch({ type: "play", ...audio })
               }}
             >

@@ -15,6 +15,7 @@ export const AudioPlayerContext = createContext()
 
 const audioInitialState = {
   url: null,
+  title: null,
   isPlaying: false,
 }
 
@@ -25,6 +26,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         url: action.url,
+        title: action.title,
         isPlaying: true,
       }
     case "pause":
