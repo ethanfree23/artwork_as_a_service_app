@@ -55,7 +55,7 @@ function MyApp({ Component, pageProps }) {
         <AudioPlayerContext.Provider value={{ audio, dispatch }}>
           <Navbar />
           <Component {...pageProps} />
-          <Footer />
+          {/* <Footer /> */}
           <AudioPlayer />
         </AudioPlayerContext.Provider>
       </GlobalContext.Provider>

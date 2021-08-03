@@ -13,8 +13,8 @@ const AudioPlayer = () => {
         <div className="content flex items-center py-6">
           {/* <div className="flex-1 flex"> */}
           <div className="flex space-x-3" style={{ minWidth: 300 }}>
-            <h4 className="text-base font-bold">
-              Podcast: <span>{audio.title}</span>
+            <h4 className="text-base">
+              Podcast: <span className="font-bold">{audio.title}</span>
             </h4>
           </div>
           <div className="flex-1 flex justify-center">
@@ -30,7 +30,9 @@ const AudioPlayer = () => {
           </div>
           <ReactPlayer url={audio.url} autoPlay playing={audio.isPlaying} className="hidden" />
           <div className="flex" style={{ minWidth: 300, justifyContent: "flex-end" }}>
-            <button onClick={() => dispatch({ type: "close" })}>X</button>
+            <button className="focus:outline" onClick={() => dispatch({ type: "close" })}>
+              X
+            </button>
           </div>
         </div>
       </div>

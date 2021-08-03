@@ -13,7 +13,8 @@ const MeetTheArtists = ({ artists }) => {
       </div>
       <div className="grid gap-10 grid-cols-3 h-96">
         {artists?.map((artist, index) => (
-          <Link key={index} href={`/gallery/${artist.id}`}>
+          // <Link key={index} href={`/gallery/${artist.id}`}>
+          <div key={index}>
             <div className="grid grid-cols-2 gap-2 overflow-hidden cursor-pointer">
               <Video className="flex-1" video={artist.video} />
               <div className="flex-1 flex flex-col gap-2 overflow-hidden">
@@ -24,7 +25,7 @@ const MeetTheArtists = ({ artists }) => {
                 ))}
               </div>
             </div>
-          </Link>
+          </div>
         ))}
       </div>
     </Section>
