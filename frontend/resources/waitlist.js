@@ -15,7 +15,6 @@ export const useWaitlistRegister = () => {
   const [mutate] = useMutation(WaitlistMutation)
 
   const wiatlistRegister = async ({ variables }) => {
-    console.log(variables)
     return await mutate({
       variables: {
         createWaitlistInput: {

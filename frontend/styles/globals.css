@@ -1,4 +1,6 @@
 @tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
   @apply font-montserrat min-h-screen;
@@ -13,8 +15,12 @@ main {
 }
 
 .content {
-  @apply max-w-screen-xl box-border mx-auto px-12;
+  @apply max-w-screen-xl box-border mx-auto px-6 md:px-12;
 }
+
+/* ::placeholder {
+  font-size: 14px;
+} */
 
 .playpause label {
   display: block;
@@ -46,6 +52,3 @@ main {
   border-style: solid;
   border-width: 12px 0 12px 20px;
 }
-
-@tailwind components;
-@tailwind utilities;

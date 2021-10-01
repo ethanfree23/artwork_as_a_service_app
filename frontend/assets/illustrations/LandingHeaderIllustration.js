@@ -7,17 +7,17 @@ function SvgComponent(props) {
       xmlnsXlink="http://www.w3.org/1999/xlink"
       {...props}
     >
-      <path fill="url(#prefix__pattern0)" d="M0 0h761v245H0z" />
-      <path fill="url(#prefix__pattern1)" d="M0 0h761v245H0z" />
-      <path fill="url(#prefix__pattern2)" d="M0 0h761v245H0z" />
+      <path fill="url(#prefix__pattern0landing)" d="M0 0h761v245H0z" />
+      <path fill="url(#prefix__pattern1landing)" d="M0 0h761v245H0z" />
+      <path fill="url(#prefix__pattern2landing)" d="M0 0h761v245H0z" />
       <defs>
-        <pattern id="prefix__pattern0" patternContentUnits="objectBoundingBox" width={1} height={1}>
+        <pattern id="prefix__pattern0landing" patternContentUnits="objectBoundingBox" width={1} height={1}>
           <use xlinkHref="#prefix__image0" transform="matrix(.00024 0 0 .00076 0 0)" />
         </pattern>
-        <pattern id="prefix__pattern1" patternContentUnits="objectBoundingBox" width={1} height={1}>
+        <pattern id="prefix__pattern1landing" patternContentUnits="objectBoundingBox" width={1} height={1}>
           <use xlinkHref="#prefix__image0" transform="matrix(.00024 0 0 .00076 0 0)" />
         </pattern>
-        <pattern id="prefix__pattern2" patternContentUnits="objectBoundingBox" width={1} height={1}>
+        <pattern id="prefix__pattern2landing" patternContentUnits="objectBoundingBox" width={1} height={1}>
           <use xlinkHref="#prefix__image0" transform="matrix(.00024 0 0 .00076 0 0)" />
         </pattern>
         <image

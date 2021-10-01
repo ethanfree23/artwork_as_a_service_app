@@ -1,11 +1,10 @@
-import { gql, useQuery } from "@apollo/client"
+import { gql, useQuery } from "utils/apolloClient"
 
 import { Page, Section } from "components/app"
 import { FeaturedGallery } from "components/artist"
 import { ArtistsTitle } from "assets/titles"
 
-const Gallery = () => {
-  const { data: artistsData } = useQuery(artistsQuery)
+const Gallery = ({ artists }) => {
   return (
     <Page>
       <Section contentClassName="pt-12">
@@ -14,7 +13,7 @@ const Gallery = () => {
           <ArtistsTitle className="text-pink" />
         </div>
         <div className="space-y-20">
-          {artistsData?.artists?.map((artist, index) => (
+          {artists?.map((artist, index) => (
             <FeaturedGallery key={index} artist={artist} />
           ))}
         </div>
@@ -23,28 +22,38 @@ const Gallery = () => {
   )
 }
 
-export default Gallery
-
-const artistsQuery = gql`
-  {
-    artists {
-      id
-      fullName
-      location
-      avatar {
-        url
-      }
-      video {
-        thumbnail {
+export async function getStaticProps() {
+  const query = gql`
+    query Query {
+      artists {
+        id
+        fullName
+        location
+        avatar {
           url
         }
-      }
-      arts {
-        title
-        images {
-          url
+        video {
+          thumbnail {
+            url
+          }
+        }
+        arts {
+          id
+          title
+          images {
+            url
+          }
         }
       }
     }
+  `
+
+  const { data } = await useQuery(query)
+
+  return {
+    props: data,
+    revalidate: 5,
   }
-`
+}
+
+export default Gallery

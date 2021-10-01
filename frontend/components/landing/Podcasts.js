@@ -13,13 +13,13 @@ const Podcasts = ({ podcasts }) => {
         <h3 className="text-xl font-bold uppercase mb-2">Podcasts with</h3>
         <ArtistsTitle className="text-pink" />
       </div>
-      <div className="grid gap-10 grid-cols-2">
+      <div className="grid gap-10 grid-cols-1 md:grid-cols-2">
         {podcasts?.map((podcast, index) => {
           const isPlaying = audio.url === podcast.link && audio.isPlaying
           return (
             <div
               key={index}
-              className="border-2 border-pink rounded-lg py-6 px-8 flex items-center space-x-8"
+              className="border-2 border-pink rounded-lg py-6 px-4 md:px-8 flex items-center space-x-4 md:space-x-8"
               title={podcast.description}
               onClick={() => {
                 const audio = { url: podcast.link, title: podcast.title }
@@ -41,19 +41,4 @@ const Podcasts = ({ podcasts }) => {
   )
 }
 
-// export default Videos
-
 export default Podcasts
-
-// const podcastsQuery = gql`
-//   query Query {
-//     podcasts {
-//       title
-//       description
-//       link
-//       file {
-//         url
-//       }
-//     }
-//   }
-// `

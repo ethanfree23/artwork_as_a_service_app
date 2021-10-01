@@ -40,6 +40,15 @@
     },
     "dimensions": {
       "type": "string"
+    },
+    "materials": {
+      "type": "string"
+    },
+    "style": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "string"
     }
   }
 }

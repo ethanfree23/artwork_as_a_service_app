@@ -14,3 +14,6 @@ export { default as LocationIcon } from "./location.svg"
 export { default as PalettePolygonIcon } from "./palette-polygon.svg"
 export { default as MoneyPolygonIcon } from "./money-polygon.svg"
 export { default as GalleryPolygonIcon } from "./gallery-polygon.svg"
+
+export { default as PhoneIcon } from "./phone.svg"
+export { default as EmailIcon } from "./email.svg"

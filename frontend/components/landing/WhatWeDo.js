@@ -38,10 +38,10 @@ const WHAT_WE_DO = [
 
 const WhatWeDoItem = ({ item: { icon: Icon, title, description } }) => (
   <AnimatedItem className="flex gap-8">
-    <div className="flex-1">
+    <div className="w-16 lg:w-auto">
       <Icon className="text-blue" />
     </div>
-    <div className="flex flex-col">
+    <div className="flex-1 flex flex-col">
       <h4 className="text-lg font-bold mb-2">{title}</h4>
       <p className="text-grey-600">{description}</p>
     </div>
@@ -56,7 +56,7 @@ const WhatWeDo = () => {
         What we do
       </AnimatedItem>
       {/* </AnimatedItem> */}
-      <div className="mt-16 grid grid-cols-3 gap-16">
+      <div className="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-16 px-4 lg:px-0">
         {WHAT_WE_DO.map((item, index) => (
           <WhatWeDoItem key={index} item={item} />
         ))}

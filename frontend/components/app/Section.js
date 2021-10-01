@@ -34,7 +34,7 @@ const Section = ({
       }}
       {...props}
     >
-      <div className={cns("content py-20", contentClassName)} {...contentProps}>
+      <div className={cns("content py-16 md:py-20", contentClassName)} {...contentProps}>
         {children}
       </div>
     </SectionElement>

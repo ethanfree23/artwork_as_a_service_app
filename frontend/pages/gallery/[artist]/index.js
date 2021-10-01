@@ -1,19 +1,11 @@
-import { gql, useQuery } from "@apollo/client"
-import { useRouter } from "next/router"
+import { gql, useQuery } from "utils/apolloClient"
 import Link from "next/link"
 
 import { Page, Section } from "components/app"
 import { LocationIcon } from "assets/icons"
 import { Video } from "components/artist"
 
-const Artist = () => {
-  const router = useRouter()
-  const { artist: artistId } = router.query
-
-  const { loading, error, data } = useQuery(artistsQuery, { variables: { artistId } })
-
-  const artist = data?.artist
-
+const Artist = ({ artist }) => {
   return (
     <Page>
       <header
@@ -38,10 +30,10 @@ const Artist = () => {
       </Section>
       <Section contentClassName="pt-12">
         <h2 className="text-2xl font-bold mb-6 uppercase">Artwork</h2>
-        <div className="grid grid-cols-3 gap-8 h-112">
+        <div className="grid grid-cols-3 gap-8">
           {artist?.arts?.map((art, index) => (
             <Link key={index} href={`/gallery/${artist?.id}/${art?.id}`}>
-              <div className="flex flex-col gap-4 overflow-hidden cursor-pointer">
+              <div className="flex flex-col gap-4 overflow-hidden cursor-pointer h-112">
                 <img className="flex-1 overflow-hidden object-cover object-center" src={art?.images[0].url} alt="art" />
                 <div className="h-16">
                   <div className="flex gap-4 justify-between">
@@ -59,32 +51,63 @@ const Artist = () => {
   )
 }
 
-export default Artist
-
-const artistsQuery = gql`
-  query Query($artistId: ID!) {
-    artist(id: $artistId) {
-      id
-      fullName
-      avatar {
-        url
+export async function getStaticPaths() {
+  const query = gql`
+    query Query {
+      artists {
+        id
       }
-      bio
-      location
-      video {
-        thumbnail {
+    }
+  `
+
+  const { data } = await useQuery(query)
+
+  return {
+    paths: data.artists.map((artist) => ({
+      params: {
+        artist: artist.id,
+      },
+    })),
+    fallback: "blocking",
+  }
+}
+
+export async function getStaticProps({ params }) {
+  const query = gql`
+    query Query($artist: ID!) {
+      artist(id: $artist) {
+        id
+        fullName
+        avatar {
           url
         }
-      }
-      arts {
-        id
-        title
-        price
-        dimensions
-        images {
-          url
+        bio
+        location
+        video {
+          thumbnail {
+            url
+          }
+        }
+        arts {
+          id
+          title
+          price
+          dimensions
+          images {
+            url
+          }
         }
       }
     }
+  `
+
+  const variables = { artist: params.artist }
+  const { data } = await useQuery(query, variables)
+
+  return {
+    props: data,
+    revalidate: 5,
   }
-`
+}
+
+export default Artist

@@ -1,9 +1,18 @@
 export function useSubmit() {
-  const onSubmit = ({ values, submitFn, formikBag: { setStatus, setSubmitting, resetForm } }) => {
+  const onSubmit = ({
+    values,
+    submitFn,
+    formikBag: { setStatus, setSubmitting, resetForm },
+    onSuccess: extraOnSuccess,
+  }) => {
     setStatus({})
     setSubmitting(true)
 
     const onSuccess = () => {
+      if (extraOnSuccess) {
+        extraOnSuccess()
+      }
+
       setSubmitting(false)
       resetForm()
     }

@@ -4,8 +4,13 @@ import * as Yup from "yup"
 import { useLogin } from "resources/auth"
 import { Button } from "components/ui"
 import { Field, useSubmit } from "components/form"
+import { useRouter } from "next/router"
+import { useState } from "react"
 
 const LoginForm = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  // const onCompleteHere = () => setIsLoggedIn(true)
   const [login] = useLogin()
 
   const initialValues = {
@@ -19,11 +24,17 @@ const LoginForm = () => {
   })
 
   const submit = useSubmit()
+  const router = useRouter()
 
   const onSubmit = (values, formikBag) => {
-    submit({ submitFn: login, values, formikBag })
+    const onSuccess = () => {
+      router.push("/gallery")
+    }
+
+    submit({ submitFn: login, values, formikBag, onSuccess })
   }
 
+  // console.log("isLoggedInnnn", isLoggedIn)
   return (
     <Formik initialValues={initialValues} validationSchema={validate} onSubmit={onSubmit}>
       {({ status }) => {
@@ -35,7 +46,7 @@ const LoginForm = () => {
             </div>
             {/* TODO: Add form status, submit button */}
             <div className="flex justify-center">
-              <Button type="submit" className="px-12">
+              <Button type="submit" className="px-12 w-full">
                 Login
               </Button>
             </div>

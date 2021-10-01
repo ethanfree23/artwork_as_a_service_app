@@ -17,10 +17,17 @@ const Wrapper = ({ href, children }) => (href ? <Link href={href}>{children}</Li
 const Button = ({ theme = "pink", isLink = false, href = null, children, className, ...props }) => {
   const classNames = isLink ? THEMES?.[theme]?.link : THEMES?.[theme]?.button
 
+  let LinkElement = href ? "a" : "button"
+
   return isLink ? (
     // eslint-disable-next-line react/no-children-prop
     <Wrapper href={href}>
-      <a className={cns("", classNames, "cursor-pointer outline-none focus:outline-none")}>{children}</a>
+      <LinkElement
+        className={cns("", classNames, className, "cursor-pointer outline-none focus:outline-none")}
+        {...props}
+      >
+        {children}
+      </LinkElement>
     </Wrapper>
   ) : (
     <Wrapper href={href}>

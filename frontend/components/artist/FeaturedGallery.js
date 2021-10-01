@@ -1,5 +1,6 @@
 import { Button } from "components/ui"
 import { Avatar, Video } from "components/artist"
+import Link from "next/link"
 
 const FeaturedGallery = ({ artist }) => {
   return (
@@ -18,12 +19,16 @@ const FeaturedGallery = ({ artist }) => {
       </div>
       <div className="mt-5 h-112 grid gap-4 grid-cols-8">
         <Video className="col-span-2" video={artist.video} />
-        <div className="col-span-3 overflow-hidden">
-          <img src={artist.arts[0]?.images[0].url} alt="art" className="object-cover w-full h-full" />
-        </div>
-        <div className="col-span-3 overflow-hidden">
-          <img src={artist.arts[1]?.images[0].url} alt="art" className="object-cover w-full h-full" />
-        </div>
+        <Link href={`/gallery/${artist?.id}/${artist.arts[0]?.id}`}>
+          <a className="col-span-3 overflow-hidden">
+            <img src={artist.arts[0]?.images[0].url} alt="art" className="object-cover w-full h-full" />
+          </a>
+        </Link>
+        <Link href={`/gallery/${artist?.id}/${artist.arts[1]?.id}`}>
+          <a className="col-span-3 overflow-hidden">
+            <img src={artist.arts[1]?.images[0].url} alt="art" className="object-cover w-full h-full" />
+          </a>
+        </Link>
       </div>
     </div>
   )

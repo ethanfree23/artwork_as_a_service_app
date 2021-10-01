@@ -1,63 +1,57 @@
 /* eslint-disable indent */
-import { createContext, useReducer } from "react"
+import { createContext, useContext, useEffect } from "react"
 import App from "next/app"
 import { ApolloProvider } from "@apollo/client"
-import { createApolloClient } from "utils/appolloClient"
+import { client } from "utils/apolloClient"
 
 import { AudioPlayer, Footer, Navbar } from "components/app"
 
-import "../styles/globals.css"
 import { fetchAPI } from "utils/request"
+import { AUTH_TOKEN, getMe, useAuthStore } from "resources/auth"
+import { usePodcastStore } from "resources/podcasts"
+
+import "../styles/globals.css"
 
 export const GlobalContext = createContext({})
-
+export const AuthContext = createContext()
 export const AudioPlayerContext = createContext()
 
-const audioInitialState = {
-  url: null,
-  title: null,
-  isPlaying: false,
-}
+const ConnectedApp = ({ Component, pageProps }) => {
+  const { dispath } = useContext(AuthContext)
 
-// TODO: Put somewhere else
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "play":
-      return {
-        ...state,
-        url: action.url,
-        title: action.title,
-        isPlaying: true,
-      }
-    case "pause":
-      return {
-        ...state,
-        isPlaying: false,
-      }
-    case "close":
-      return {
-        ...state,
-        url: null,
-        isPlaying: false,
-      }
-    default:
-      return state
-  }
+  useEffect(() => {
+    let token = localStorage.getItem(AUTH_TOKEN)
+    if (token !== null) {
+      getMe()
+        .then((res) => dispath({ type: "login", me: { ...res.me } }))
+        .catch(() => localStorage.removeItem(AUTH_TOKEN))
+    }
+  }, [])
+
+  return (
+    <>
+      <Navbar />
+      <Component {...pageProps} />
+      <Footer />
+      <AudioPlayer />
+    </>
+  )
 }
 
 function MyApp({ Component, pageProps }) {
   const { global } = pageProps
-  const [audio, dispatch] = useReducer(reducer, audioInitialState)
+
+  const [authState, authDispatch] = useAuthStore()
+  const [audioState, audioDispatch] = usePodcastStore()
 
   return (
-    <ApolloProvider client={createApolloClient()}>
+    <ApolloProvider client={client}>
       <GlobalContext.Provider value={global}>
-        <AudioPlayerContext.Provider value={{ audio, dispatch }}>
-          <Navbar />
-          <Component {...pageProps} />
-          {/* <Footer /> */}
-          <AudioPlayer />
-        </AudioPlayerContext.Provider>
+        <AuthContext.Provider value={{ auth: authState, dispath: authDispatch }}>
+          <AudioPlayerContext.Provider value={{ audio: audioState, dispatch: audioDispatch }}>
+            <ConnectedApp Component={Component} pageProps={pageProps} />
+          </AudioPlayerContext.Provider>
+        </AuthContext.Provider>
       </GlobalContext.Provider>
     </ApolloProvider>
   )

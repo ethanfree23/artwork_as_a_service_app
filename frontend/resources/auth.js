@@ -1,39 +1,44 @@
-import { useRouter } from "next/router"
-import { gql, useMutation, useQuery } from "@apollo/client"
+/* eslint-disable indent */
+import { AuthContext } from "pages/_app"
+import { useContext, useReducer } from "react"
+import { gql, useMutation, useQuery } from "utils/apolloClient"
 
-const AUTH_TOKEN = "authToken"
+export const AUTH_TOKEN = "authToken"
 
 const meQuery = gql`
   query me {
     me {
+      id
       email
       username
-      id
     }
   }
 `
+export const getMe = async () => {
+  const { data } = await useQuery(meQuery)
+  return data
+}
 
-export const useAuth = () => {
-  let hasToken = false
+const initialState = {
+  isLoggedIn: false,
+  me: {},
+}
 
-  if (process.browser) {
-    hasToken = localStorage.getItem(AUTH_TOKEN)
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "login":
+      return {
+        ...state,
+        isLoggedIn: true,
+        me: action.me,
+      }
+    default:
+      return state
   }
+}
 
-  const router = useRouter()
-  const { data, refetch } = useQuery(meQuery)
-
-  const logOut = () => {
-    localStorage.removeItem(AUTH_TOKEN)
-    router.push(router.pathname)
-  }
-
-  return {
-    isLoggedIn: hasToken && data?.me?.email,
-    me: data?.me,
-    logOut,
-    refetch,
-  }
+export const useAuthStore = () => {
+  return useReducer(reducer, initialState)
 }
 
 const RegisterMutation = gql`
@@ -49,14 +54,11 @@ const RegisterMutation = gql`
 `
 
 export const useRegister = () => {
-  // const router = useRouter()
-  const { refetch } = useQuery(meQuery)
-
+  const { dispath } = useContext(AuthContext)
   const [mutate] = useMutation(RegisterMutation, {
     onCompleted: ({ register }) => {
       localStorage.setItem(AUTH_TOKEN, register.jwt)
-      // router.push(router.pathname)
-      refetch()
+      dispath({ type: "login", me: { ...register.user } })
     },
   })
 
@@ -77,19 +79,21 @@ const LoginMutation = gql`
   mutation UserMutation($loginInput: UsersPermissionsLoginInput!) {
     login(input: $loginInput) {
       jwt
+      user {
+        email
+        id
+      }
     }
   }
 `
 
 export const useLogin = () => {
-  // const router = useRouter()
-  const { refetch } = useQuery(meQuery)
+  const { dispath } = useContext(AuthContext)
 
   const [mutate] = useMutation(LoginMutation, {
     onCompleted: ({ login }) => {
       localStorage.setItem(AUTH_TOKEN, login.jwt)
-      // router.push(router.pathname)
-      refetch()
+      dispath({ type: "login", me: { ...login.user } })
     },
   })
 
@@ -105,3 +109,26 @@ export const useLogin = () => {
 
   return [login]
 }
+
+// export const useAuth = () => {
+//   let hasToken = false
+
+//   if (process.browser) {
+//     hasToken = localStorage.getItem(AUTH_TOKEN)
+//   }
+
+//   const router = useRouter()
+//   const { data, refetch } = useQuery(meQuery)
+
+//   const logOut = () => {
+//     localStorage.removeItem(AUTH_TOKEN)
+//     router.push(router.pathname)
+//   }
+
+//   return {
+//     isLoggedIn: hasToken && data?.me?.email,
+//     me: data?.me,
+//     logOut,
+//     refetch,
+//   }
+// }

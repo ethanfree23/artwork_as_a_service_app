@@ -49,12 +49,12 @@ const Features = () => {
   return (
     <Section
       animateOnReveal
-      className="bg-top bg-cover pt-24"
+      className="bg-top bg-cover pt-48 lg:pt-24"
       contentClassName="text-white flex flex-col items-center space-y-12"
       backgroundImage="backgrounds/landing-features-bg.svg"
     >
       <FeaturesTitle />
-      <div className="grid grid-cols-3 gap-20">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-20">
         {FEATURES.map((feature, index) => (
           <Feature key={index} feature={feature} />
         ))}
