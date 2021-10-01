@@ -1,5 +1,5 @@
 import cns from "classnames"
-import { LandingHeaderIllustration } from "assets/illustrations"
+import { CharacterOneIllustration, LandingHeaderIllustration } from "assets/illustrations"
 
 const Header = () => {
   return (
@@ -15,7 +15,8 @@ const Header = () => {
           An art gallery designed for the modern artrepenuer. Market your art, build your brand, and establish yourself
           as an artist.
         </p>
-        <LandingHeaderIllustration className="mt-10 w-full max-w-3xl" />
+        <LandingHeaderIllustration className="hidden md:flex mt-10 w-full max-w-3xl" />
+        <CharacterOneIllustration className="flex md:hidden pt-4 pb-16 w-3/4 max-w-[360px]" />
       </div>
     </header>
   )
