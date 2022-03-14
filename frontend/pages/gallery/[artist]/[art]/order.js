@@ -14,7 +14,7 @@ import { Button } from "components/ui"
 
 import { CreateOrder } from "resources/order"
 import { AuthContext } from "pages/_app"
-import { Field } from "components/form"
+import { Field, SubmitButton } from "components/form"
 import { formatPrice, getRentalPrice, getPurchasePrice } from "resources/art"
 import { useCreateAttachPaymentMethod } from "resources/payments"
 
@@ -87,7 +87,8 @@ const OrderForm = ({ art, type }) => {
 
   // console.log("auth?.me", auth?.me)
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values, { setSubmitting }) => {
+    setSubmitting(true)
     // submit({ submitFn: login, values, formikBag, onSuccess })
     // TODO: Check role and direct to route depending
     // login({ variables: values }).then(() => router.push("/artist/dashboard"))
@@ -109,7 +110,7 @@ const OrderForm = ({ art, type }) => {
             },
           },
         },
-        onCompleted: () => console.log("DONEEE"),
+        onCompleted: () => setSubmitting(false),
       })
 
     const paymentMethod = await stripe.createPaymentMethod({
@@ -117,7 +118,8 @@ const OrderForm = ({ art, type }) => {
       card: elements.getElement(CardElement),
     })
 
-    createAttachPaymentMethod({ values: { ...paymentMethod }, onSuccess: () => processOrder() })
+    await createAttachPaymentMethod({ values: { ...paymentMethod } })
+    await processOrder()
   }
 
   return (
@@ -185,14 +187,16 @@ const OrderForm = ({ art, type }) => {
                         <CardField />
                       </div>
                       {/* TODO: Add form status, submit button */}
-                      <div className="flex justify-center">
-                        <Button type="submit" className="px-12 w-full font-semibold">
-                          {isSubmitting
-                            ? "Paying..."
-                            : type === "buy"
-                            ? `Pay $${formatPrice(getPurchasePrice(art))}`
-                            : `Pay $${formatPrice(getRentalPrice(art))} for ${values.months || 0} months`}
-                        </Button>
+                      <div className="flex justify-stretch">
+                        <SubmitButton
+                          className="w-full"
+                          label={
+                            type === "buy"
+                              ? `Pay $${formatPrice(getPurchasePrice(art))}`
+                              : `Pay $${formatPrice(getRentalPrice(art))} for ${values.months || 0} months`
+                          }
+                          labelSubmitting="Paying"
+                        />
                       </div>
                     </Form>
                   )
