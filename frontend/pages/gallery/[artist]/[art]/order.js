@@ -110,7 +110,7 @@ const OrderForm = ({ art, type }) => {
             },
           },
         },
-        onCompleted: () => setSubmitting(false),
+        // onCompleted: () =>  setSubmitting(false),
       })
 
     const paymentMethod = await stripe.createPaymentMethod({
@@ -118,8 +118,13 @@ const OrderForm = ({ art, type }) => {
       card: elements.getElement(CardElement),
     })
 
-    await createAttachPaymentMethod({ values: { ...paymentMethod } })
-    await processOrder()
+    createAttachPaymentMethod({
+      values: { ...paymentMethod },
+      onSuccess: () => {
+        setSubmitting(true)
+        processOrder()
+      },
+    })
   }
 
   return (
@@ -197,6 +202,13 @@ const OrderForm = ({ art, type }) => {
                           }
                           labelSubmitting="Paying"
                         />
+                        {/* <Button type="submit" className="px-12 w-full font-semibold">
+                          {isSubmitting
+                            ? "Paying..."
+                            : type === "buy"
+                            ? `Pay $${formatPrice(getPurchasePrice(art))}`
+                            : `Pay $${formatPrice(getRentalPrice(art))} for ${values.months || 0} months`}
+                        </Button> */}
                       </div>
                     </Form>
                   )
