@@ -11,11 +11,19 @@ body {
 }
 
 main {
-  @apply min-h-full flex-1;
+  @apply flex-1;
 }
 
 .content {
   @apply max-w-screen-xl box-border mx-auto px-6 md:px-12;
+}
+
+.content-sm {
+  @apply max-w-screen-lg box-border mx-auto px-6 md:px-12;
+}
+
+div#ReactQueryDevtoolsPanel {
+  height: 400px !important;
 }
 
 /* ::placeholder {
@@ -51,4 +59,21 @@ main {
 .playpause.small input[type="checkbox"]:checked + label {
   border-style: solid;
   border-width: 12px 0 12px 20px;
+}
+
+.saving-dots {
+  color: currentColor;
+}
+
+.saving-dots.span {
+  font-size: 16px;
+  animation: dots1 1s infinite steps(1);
+}
+
+.saving-dots.span:first-child + span {
+  animation-name: dots2;
+}
+
+.saving-dots.span:first-child + span + span {
+  animation-name: dots3;
 }

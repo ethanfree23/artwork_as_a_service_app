@@ -19,7 +19,6 @@ function SvgComponent(props) {
         </pattern>
         <pattern id="prefix__pattern2landing" patternContentUnits="objectBoundingBox" width={1} height={1}>
           <use xlinkHref="#prefix__image0landing" transform="matrix(.00024 0 0 .00076 0 0)" />
-
         </pattern>
         <image
           id="prefix__image0landing"

@@ -4,6 +4,7 @@ import cns from "classnames"
 const THEMES = {
   pink: {
     button: "bg-pink text-white hover:bg-pink-600",
+    buttonOutline: "border border-pink text-pink hover:bg-pink-600 hover:text-white",
     link: "text-pink hover:text-pink-600",
   },
   grey: {
@@ -14,8 +15,21 @@ const THEMES = {
 
 const Wrapper = ({ href, children }) => (href ? <Link href={href}>{children}</Link> : <>{children}</>)
 
-const Button = ({ theme = "pink", isLink = false, href = null, children, className, ...props }) => {
-  const classNames = isLink ? THEMES?.[theme]?.link : THEMES?.[theme]?.button
+const Button = ({
+  theme = "pink",
+  isLink = false,
+  isOutline = false,
+  size = "md",
+  href = null,
+  children,
+  className,
+  ...props
+}) => {
+  const classNames = isLink
+    ? THEMES?.[theme]?.link
+    : isOutline
+    ? THEMES?.[theme]?.buttonOutline
+    : THEMES?.[theme]?.button
 
   let LinkElement = href ? "a" : "button"
 
@@ -33,7 +47,9 @@ const Button = ({ theme = "pink", isLink = false, href = null, children, classNa
     <Wrapper href={href}>
       <button
         className={cns(
-          "px-5 py-2 rounded-lg text-sm font-normal outline-none focus:outline-none",
+          "px-5 py-2.5 rounded-lg outline-none focus:outline-none disabled:opacity-50",
+          size === "md" && "text-sm font-semibold",
+          size === "lg" && "text-base font-semibold",
           classNames,
           className
         )}

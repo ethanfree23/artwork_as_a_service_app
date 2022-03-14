@@ -61,6 +61,24 @@
     },
     "fullName": {
       "type": "string"
+    },
+    "artist": {
+      "via": "users_permissions_user",
+      "model": "artists"
+    },
+    "orders": {
+      "via": "buyer",
+      "collection": "order"
+    },
+    "artistOrders": {
+      "via": "artist",
+      "collection": "order"
+    },
+    "stripeId": {
+      "type": "string"
+    },
+    "agreedToTerms": {
+      "type": "boolean"
     }
   }
 }

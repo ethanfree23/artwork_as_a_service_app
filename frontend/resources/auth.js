@@ -2,8 +2,29 @@
 import { AuthContext } from "pages/_app"
 import { useContext, useReducer } from "react"
 import { gql, useMutation, useQuery } from "utils/apolloClient"
+import { useCreateArtist } from "./artist"
 
 export const AUTH_TOKEN = "authToken"
+
+export const getRole = () => {
+  const { auth } = useContext(AuthContext)
+  return auth?.me?.role
+}
+
+export const getAuth = () => {
+  const { auth } = useContext(AuthContext)
+  return auth
+}
+
+export const getUser = () => {
+  const { auth } = useContext(AuthContext)
+  return auth?.me
+}
+
+export const isUserArtist = () => {
+  const role = getRole()
+  return role?.id === "3"
+}
 
 const meQuery = gql`
   query me {
@@ -11,6 +32,13 @@ const meQuery = gql`
       id
       email
       username
+      fullName
+      stripeId
+      agreedToTerms
+      role {
+        id
+        name
+      }
     }
   }
 `
@@ -32,6 +60,13 @@ const reducer = (state, action) => {
         isLoggedIn: true,
         me: action.me,
       }
+    case "logout":
+      localStorage.removeItem(AUTH_TOKEN)
+      return {
+        ...state,
+        isLoggedIn: false,
+        me: null,
+      }
     default:
       return state
   }
@@ -45,8 +80,15 @@ const RegisterMutation = gql`
   mutation UserMutation($registerInput: UsersPermissionsRegisterInput!) {
     register(input: $registerInput) {
       user {
+        id
         email
         username
+        fullName
+        agreedToTerms
+        role {
+          id
+          name
+        }
       }
       jwt
     }
@@ -54,11 +96,24 @@ const RegisterMutation = gql`
 `
 
 export const useRegister = () => {
-  const { dispath } = useContext(AuthContext)
+  const { dispatch } = useContext(AuthContext)
+
+  const [createArtist] = useCreateArtist()
+
   const [mutate] = useMutation(RegisterMutation, {
     onCompleted: ({ register }) => {
       localStorage.setItem(AUTH_TOKEN, register.jwt)
-      dispath({ type: "login", me: { ...register.user } })
+      dispatch({ type: "login", me: { ...register.user } })
+      if (register.user.role.id === "3") {
+        createArtist({
+          variables: {
+            bio: "",
+            location: "",
+            fullName: register.user.fullName,
+            users_permissions_user: register.user.id,
+          },
+        })
+      }
     },
   })
 
@@ -80,20 +135,26 @@ const LoginMutation = gql`
     login(input: $loginInput) {
       jwt
       user {
-        email
         id
+        email
+        username
+        fullName
+        role {
+          id
+          name
+        }
       }
     }
   }
 `
 
 export const useLogin = () => {
-  const { dispath } = useContext(AuthContext)
+  const { dispatch } = useContext(AuthContext)
 
   const [mutate] = useMutation(LoginMutation, {
     onCompleted: ({ login }) => {
       localStorage.setItem(AUTH_TOKEN, login.jwt)
-      dispath({ type: "login", me: { ...login.user } })
+      dispatch({ type: "login", me: { ...login.user } })
     },
   })
 
@@ -109,26 +170,3 @@ export const useLogin = () => {
 
   return [login]
 }
-
-// export const useAuth = () => {
-//   let hasToken = false
-
-//   if (process.browser) {
-//     hasToken = localStorage.getItem(AUTH_TOKEN)
-//   }
-
-//   const router = useRouter()
-//   const { data, refetch } = useQuery(meQuery)
-
-//   const logOut = () => {
-//     localStorage.removeItem(AUTH_TOKEN)
-//     router.push(router.pathname)
-//   }
-
-//   return {
-//     isLoggedIn: hasToken && data?.me?.email,
-//     me: data?.me,
-//     logOut,
-//     refetch,
-//   }
-// }

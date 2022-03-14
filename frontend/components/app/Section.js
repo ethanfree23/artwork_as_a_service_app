@@ -16,6 +16,7 @@ const SectionElement = ({ animateOnReveal, threshold, children, ...rest }) => {
 }
 
 const Section = ({
+  contentSize = "content",
   contentClassName,
   contentProps,
   className,
@@ -34,7 +35,7 @@ const Section = ({
       }}
       {...props}
     >
-      <div className={cns("content py-16 md:py-20", contentClassName)} {...contentProps}>
+      <div className={cns("py-16 md:py-20", contentSize, contentClassName)} {...contentProps}>
         {children}
       </div>
     </SectionElement>

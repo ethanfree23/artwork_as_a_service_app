@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_order_comments",
+  "info": {
+    "name": "comments",
+    "icon": "quote-left"
+  },
+  "options": {},
+  "attributes": {
+    "buyer": {
+      "type": "text"
+    },
+    "artist": {
+      "type": "text"
+    }
+  }
+}

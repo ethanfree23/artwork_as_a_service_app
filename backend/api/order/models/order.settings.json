@@ -1,0 +1,90 @@
+{
+  "kind": "collectionType",
+  "collectionName": "orders",
+  "info": {
+    "name": "Order",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "art": {
+      "via": "orders",
+      "model": "art"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "accepted",
+        "rented",
+        "sold",
+        "returnDue",
+        "completed",
+        "cancelled",
+        "rejected"
+      ]
+    },
+    "buyer": {
+      "via": "orders",
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "artist": {
+      "via": "artistOrders",
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "awaitingBuyer": {
+      "type": "enumeration",
+      "enum": [
+        "receival",
+        "return"
+      ]
+    },
+    "awaitingArtist": {
+      "type": "enumeration",
+      "enum": [
+        "acceptance",
+        "delivery",
+        "pickUp"
+      ]
+    },
+    "address": {
+      "type": "component",
+      "repeatable": false,
+      "component": "common.address"
+    },
+    "months": {
+      "type": "integer"
+    },
+    "price": {
+      "type": "biginteger"
+    },
+    "startDate": {
+      "type": "datetime"
+    },
+    "endDate": {
+      "type": "datetime"
+    },
+    "comments": {
+      "type": "component",
+      "repeatable": false,
+      "component": "order.comments"
+    },
+    "stripeData": {
+      "type": "json"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "rent",
+        "buy"
+      ]
+    }
+  }
+}

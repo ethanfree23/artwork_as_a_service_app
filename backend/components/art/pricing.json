@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_art_pricings",
+  "info": {
+    "name": "pricing",
+    "icon": "money-bill-alt"
+  },
+  "options": {},
+  "attributes": {
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "rent",
+        "buy"
+      ]
+    },
+    "price": {
+      "type": "integer"
+    },
+    "priceId": {
+      "type": "string"
+    }
+  }
+}

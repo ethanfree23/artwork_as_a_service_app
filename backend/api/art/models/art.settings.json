@@ -49,6 +49,35 @@
     },
     "subject": {
       "type": "string"
+    },
+    "bio": {
+      "type": "richtext"
+    },
+    "orders": {
+      "via": "art",
+      "collection": "order"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "market",
+        "rented",
+        "sold",
+        "draft",
+        "inactive"
+      ],
+      "default": "market"
+    },
+    "productId": {
+      "type": "string"
+    },
+    "priceId": {
+      "type": "string"
+    },
+    "pricing": {
+      "type": "component",
+      "repeatable": true,
+      "component": "art.pricing"
     }
   }
 }

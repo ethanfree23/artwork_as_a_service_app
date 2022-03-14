@@ -13,8 +13,7 @@ const FEATURES = [
   {
     icon: MoneyPolygonIcon,
     title: "Monthly Income",
-    description:
-      "Subscriptions to your art are paid monthly. Collectors can have the option to pay in monthly increments.",
+    description: "Earn in new ways. Through rentals, you can establish monthly income while marketing to more people.",
   },
   {
     icon: GalleryPolygonIcon,

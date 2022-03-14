@@ -39,6 +39,11 @@
     },
     "location": {
       "type": "string"
+    },
+    "users_permissions_user": {
+      "via": "artist",
+      "plugin": "users-permissions",
+      "model": "user"
     }
   }
 }

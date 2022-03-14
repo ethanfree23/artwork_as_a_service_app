@@ -1,38 +1,38 @@
 import { Section } from "components/app"
-import { AnimateOnReveal, AnimatedItem } from "components/utils"
+import { AnimatedItem } from "components/utils"
 
 import { ConnectIcon, FinanceIcon, LikesIcon, PartnerIcon, RotateIcon, SellIcon } from "assets/icons"
 
 const WHAT_WE_DO = [
   {
     icon: LikesIcon,
-    title: "Earn through likes.",
-    description: "Every like earned through your content, you earn money.",
+    title: "Earn monthly.",
+    description: "Every piece you have rented out means monthly income you can count on.",
   },
   {
     icon: PartnerIcon,
     title: "The business partner you need.",
-    description: "You focus on the art and lifestyle, we handle the boring business stuff.",
-  },
-  {
-    icon: ConnectIcon,
-    title: "Connect with your peers.",
-    description: "Establish ethos, form partnerships, get connected through the form.",
+    description: "Keep track of sales and easily manage inventory.",
   },
   {
     icon: RotateIcon,
     title: "Rotate your art.",
-    description: "Why limit your sales to purchases? How about rotating galleries?",
+    description: "Why limit your sales to purchases? How about renting your art?",
   },
   {
-    icon: FinanceIcon,
-    title: "Finance your art, keep the interests.",
-    description: "Artists have the option to finance their art. You choose the rate, term length, safety deposit.",
+    icon: ConnectIcon,
+    title: "Connect with artists and buyers alike.",
+    description: "Go direct to the source without having a middleman. Get to know artists directly.",
   },
+  // {
+  //   icon: FinanceIcon,
+  //   title: "Finance your art, keep the interests.",
+  //   description: "Artists have the option to finance their art. You choose the rate, term length, safety deposit.",
+  // },
   {
     icon: SellIcon,
     title: "Sell art, keep the money.",
-    description: "Finally! A gallery that gives you exposure at only 5% commission.",
+    description: "Finally! A gallery that gives you exposure at only 15% commission.",
   },
 ]
 
