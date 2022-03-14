@@ -33,7 +33,7 @@ const Profile = () => {
   const initialValues = {
     fullName: artist?.fullName || auth?.me?.fullName,
     bio: artist?.bio,
-    location: artist?.location || "Austin, Texas",
+    location: artist?.location || "Texas",
   }
 
   const validate = Yup.object().shape({
