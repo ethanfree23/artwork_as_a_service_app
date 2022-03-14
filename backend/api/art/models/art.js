@@ -35,7 +35,7 @@ module.exports = {
           unit_amount: data.pricing[purchaseIndex].price,
           currency: "usd",
           product: product.id,
-          // recurring: { interval: "month" },
+          recurring: { interval: "month" },
         });
         data.pricing[purchaseIndex].priceId = purchasePrice.id;
       }
