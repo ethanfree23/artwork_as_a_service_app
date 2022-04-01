@@ -29,6 +29,11 @@ const links = () => ApolloLink.from([authLink, httpLink])
 export const client = new ApolloClient({
   link: links(),
   cache: new InMemoryCache(),
+  defaultOptions: {
+    query: {
+      fetchPolicy: "network-only",
+    },
+  },
 })
 
 //Currently only using in getStaticProps
