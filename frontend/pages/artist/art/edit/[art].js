@@ -203,12 +203,13 @@ const Edit = ({ art, ...rest }) => {
   const empties = 4 - subImages.length
   const emptySpaces = empties > 0 ? Array(4 - subImages.length).fill(<div></div>) : []
 
+  const currentStatus = art?.orders[art?.orders?.length - 1]?.status
   return (
     <Page>
       <Section>
         <h1 className="text-center font-bold text-3xl mb-2">Edit your piece</h1>
         <h2 className="text-center mb-12">
-          Status: {art?.orders[art?.orders?.length - 1].status} - {!canEdit && "You cannot edit this piece right now"}
+          {!canEdit && `Status: ${currentStatus} - ${!canEdit ? "You cannot edit this piece right now" : ""}`}
         </h2>
         {/* TODO: Move into Formik */}
         <Formik initialValues={initialValues} validationSchema={validate} onSubmit={onSubmit} enableReinitialize>

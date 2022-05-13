@@ -1,5 +1,6 @@
 import { useContext, useState } from "react"
 import { gql, useQuery } from "utils/apolloClient"
+import { useQuery as useApolloQuery } from "@apollo/client"
 // import { useRouter } from "next/router"
 import Link from "next/link"
 
@@ -7,16 +8,15 @@ import { Page, Section } from "components/app"
 import { Button } from "components/ui"
 import { Avatar } from "components/artist"
 import cns from "classnames"
-import { getArtistsArt, getPrices } from "resources/art"
+import { getPrices } from "resources/art"
 import { AuthContext } from "pages/_app"
 import { isUserArtist } from "resources/auth"
-import { getMeArtist } from "resources/artist"
+import { meArtistQuery } from "resources/artist"
 
 const Art = ({ art }) => {
   const { auth } = useContext(AuthContext)
 
   const isArtist = isUserArtist()
-  const { data: artsData } = getArtistsArt()
 
   const [currentArt, setCurrentArt] = useState(0)
   const otherArtWork = art?.artist?.arts.filter((otherArt) => otherArt.id !== art.id)
@@ -25,11 +25,14 @@ const Art = ({ art }) => {
     ["accepted", "rented", "sold", "returnDue"].includes(order.status)
   )
 
-  console.log("art", art)
+  const { data: userData } = useApolloQuery(meArtistQuery, {
+    variables: { userId: auth?.me?.id },
+  })
 
-  const isMyArt = artsData?.arts?.findIndex(({ id }) => id === art.id) !== -1
+  // const { data: testing } = useQuery(meArtistQuery, { variables: { id: 17 } })
+  // console.log("testing", testing)
   // const { data: artistData } = useQuery(meArtistQuery, { variables: { userId: auth?.me?.id } }) maybe
-
+  const isMyArt = userData?.user?.artist?.id === art?.artist?.id
   let canRentOrBuy = auth.isLoggedIn && !isArtist && anyOrdersOut === -1
 
   return (
