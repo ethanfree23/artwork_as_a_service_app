@@ -121,3 +121,58 @@ export const useCreateArt = () => {
 
   return [createArt]
 }
+
+const UpdateArtMutation = gql`
+  mutation UpdateArtMutation($updateArtInput: updateArtInput) {
+    updateArt(input: $updateArtInput) {
+      art {
+        title
+        description
+        quantity
+        pricing {
+          type
+          price
+        }
+        dimensions
+        materials
+        subject
+        style
+        artist {
+          id
+        }
+        images {
+          id
+          url
+          created_at
+          updated_at
+          name
+          hash
+          mime
+          size
+          provider
+        }
+      }
+    }
+  }
+`
+
+export const useUpdateArt = (id) => {
+  const [mutate] = useMutation(UpdateArtMutation)
+
+  const updateArt = async ({ variables }) => {
+    return await mutate({
+      variables: {
+        updateArtInput: {
+          data: {
+            ...variables,
+          },
+          where: {
+            id: id,
+          },
+        },
+      },
+    })
+  }
+
+  return [updateArt]
+}

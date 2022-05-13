@@ -7,14 +7,16 @@ import { Page, Section } from "components/app"
 import { Button } from "components/ui"
 import { Avatar } from "components/artist"
 import cns from "classnames"
-import { getPrices } from "resources/art"
+import { getArtistsArt, getPrices } from "resources/art"
 import { AuthContext } from "pages/_app"
 import { isUserArtist } from "resources/auth"
+import { getMeArtist } from "resources/artist"
 
 const Art = ({ art }) => {
   const { auth } = useContext(AuthContext)
 
   const isArtist = isUserArtist()
+  const { data: artsData } = getArtistsArt()
 
   const [currentArt, setCurrentArt] = useState(0)
   const otherArtWork = art?.artist?.arts.filter((otherArt) => otherArt.id !== art.id)
@@ -22,6 +24,11 @@ const Art = ({ art }) => {
   const anyOrdersOut = art?.orders?.findIndex((order) =>
     ["accepted", "rented", "sold", "returnDue"].includes(order.status)
   )
+
+  console.log("art", art)
+
+  const isMyArt = artsData?.arts?.findIndex(({ id }) => id === art.id) !== -1
+  // const { data: artistData } = useQuery(meArtistQuery, { variables: { userId: auth?.me?.id } }) maybe
 
   let canRentOrBuy = auth.isLoggedIn && !isArtist && anyOrdersOut === -1
 
@@ -52,8 +59,17 @@ const Art = ({ art }) => {
         </div>
         <div className="flex-1 flex flex-col">
           <div className="flex flex-col gap-3">
-            <h1 className="text-2xl font-bold">{art?.title}</h1>
-            <h2 className="text-lg font-bold text-pink">By {art?.artist?.fullName}</h2>
+            <div className="flex justify-between">
+              <div>
+                <h1 className="text-2xl font-bold">{art?.title}</h1>
+                <h2 className="text-lg font-bold text-pink">By {art?.artist?.fullName}</h2>
+              </div>
+              {isMyArt && (
+                <Button href={`/artist/art/edit/${art.id}`} isLink className="mt-1">
+                  Edit
+                </Button>
+              )}
+            </div>
             <div className="flex flex-col gap-1">
               {art?.dimensions && (
                 <h4 className="text-sm space-x-2">
