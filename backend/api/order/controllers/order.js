@@ -10,7 +10,7 @@
 const sendEmail = async ({ to, subject, vars }) => {
   return await strapi.plugins["email"].services.email.send({
     to: to,
-    from: "Freeman Art Company <mailgun@sandbox00419944efc843a585c50d4d5822cc9c.mailgun.org>",
+    from: "Freeman Art Company <mail@freemanartcompany.com>",
     subject: subject,
     template: "order-update",
     "h:X-Mailgun-Variables": JSON.stringify({
@@ -64,16 +64,16 @@ module.exports = {
         );
 
         if (update && order.awaitingBuyer !== null) {
-          // sendEmail({
-          //   to: order.buyer.email,
-          //   subject: "Mark your order as delivered",
-          //   vars: {
-          //     fullName: order.buyer.fullName,
-          //     id: order.id,
-          //     text: "The artist has marked your order as delivered, please make sure to mark it as received. If you do not mark it as recived within the next 2 days it will be done automatically. If the order has not been delivered/received please contact us.",
-          //     buttonLabel: "Mark as Received",
-          //   },
-          // });
+          sendEmail({
+            to: order.buyer.email,
+            subject: "Mark your order as delivered",
+            vars: {
+              fullName: order.buyer.fullName,
+              id: order.id,
+              text: "The artist has marked your order as delivered, please make sure to mark it as received. If you do not mark it as recived within the next 2 days it will be done automatically. If the order has not been delivered/received please contact us.",
+              buttonLabel: "Mark as Received",
+            },
+          });
         }
         return update;
       } else if (order.status === "returnDue") {

@@ -60,5 +60,55 @@ module.exports = {
       data.productId = product.id;
       // data.priceId = "123456";
     },
+    beforeUpdate: async (data, ...rest) => {
+      const art = await strapi.query("art").findOne({ id: data.id });
+      const newArt = rest[0];
+
+      console.log("newArt", newArt.pricing);
+      const newRentIndex = newArt.pricing.findIndex(
+        (price) => price.type === "rent"
+      );
+
+      const rentalIndex = art.pricing.findIndex(
+        (price) => price.type === "rent"
+      );
+
+      if (
+        newRentIndex !== -1 &&
+        art.pricing[rentalIndex].price !== newArt.pricing[newRentIndex].price
+      ) {
+        const rentalPrice = await stripe.prices.create({
+          unit_amount: newArt.pricing[rentalIndex].price,
+          currency: "usd",
+          product: art.productId,
+          recurring: { interval: "month" },
+        });
+
+        newArt.pricing[newRentIndex].priceId = rentalPrice.id;
+      }
+
+      const newPurchaseIndex = newArt.pricing.findIndex(
+        (price) => price.type === "buy"
+      );
+
+      const purchaseIndex = art.pricing.findIndex(
+        (price) => price.type === "buy"
+      );
+
+      if (
+        newPurchaseIndex !== -1 &&
+        art?.pricing?.[purchaseIndex]?.price !==
+          newArt.pricing[newPurchaseIndex].price
+      ) {
+        const purchasePrice = await stripe.prices.create({
+          unit_amount: newArt.pricing[newPurchaseIndex].price,
+          currency: "usd",
+          product: art.productId,
+          recurring: { interval: "month" },
+        });
+
+        newArt.pricing[newPurchaseIndex].priceId = purchasePrice.id;
+      }
+    },
   },
 };

@@ -192,6 +192,7 @@ export async function getStaticProps({ params }) {
           type
           price
           priceId
+          forbid
         }
         dimensions
         materials
@@ -215,6 +216,7 @@ export async function getStaticProps({ params }) {
               type
               price
               priceId
+              forbid
             }
             dimensions
             images {

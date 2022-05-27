@@ -26,11 +26,11 @@ export const getPrices = (art) => {
   const rentalPrice = art?.pricing?.find((price) => price.type === "rent")
   const purchasePrice = art?.pricing?.find((price) => price.type === "buy")
 
-  if (purchasePrice) {
+  if (purchasePrice && !purchasePrice.forbid) {
     prices.push(`Buy: $${roundIfNeeded(purchasePrice.price / 100)}`)
   }
 
-  if (rentalPrice) {
+  if (rentalPrice && !rentalPrice.forbid) {
     prices.push(`Rent: $${roundIfNeeded(rentalPrice.price / 100)} / mo`)
   }
 
@@ -80,6 +80,7 @@ const CreateArtMutation = gql`
         pricing {
           type
           price
+          forbid
         }
         dimensions
         materials
@@ -132,6 +133,7 @@ const UpdateArtMutation = gql`
         pricing {
           type
           price
+          forbid
         }
         dimensions
         materials

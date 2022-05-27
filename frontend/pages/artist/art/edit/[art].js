@@ -66,6 +66,9 @@ const Edit = ({ art }) => {
   const initialBuyPrice = art.pricing.find((price) => price.type === "buy")
   const initialRentPrice = art.pricing.find((price) => price.type === "rent")
 
+  console.log(art.pricing)
+  console.log(initialRentPrice?.forbid)
+  console.log(initialBuyPrice?.forbid)
   const initialValues = {
     title: art?.title || "",
     description: art?.description || "",
@@ -77,13 +80,13 @@ const Edit = ({ art }) => {
     // style: "",
     pricing: {
       rent: {
-        price: initialRentPrice.price / 100 || 100,
-        forbid: !initialRentPrice || false,
+        price: initialRentPrice?.price / 100 || 100,
+        forbid: initialRentPrice?.forbid !== null ? initialRentPrice?.forbid : false,
         type: "rent",
       },
       buy: {
-        price: initialBuyPrice.price / 100 || 1000,
-        forbid: !initialBuyPrice || false,
+        price: initialBuyPrice?.price / 100 || 1000,
+        forbid: initialBuyPrice?.forbid !== null ? initialBuyPrice?.forbid : false,
         type: "buy",
       },
     },
@@ -118,10 +121,14 @@ const Edit = ({ art }) => {
       pricing: [
         {
           price: parseInt(values?.pricing?.rent?.price * 100),
+          forbid: values?.pricing?.rent?.forbid,
+          priceId: initialRentPrice?.priceId,
           type: "rent",
         },
         {
           price: parseInt(values?.pricing?.buy?.price * 100),
+          forbid: values?.pricing?.buy?.forbid,
+          priceId: initialBuyPrice?.priceId,
           type: "buy",
         },
       ],
@@ -198,7 +205,6 @@ const Edit = ({ art }) => {
 
   const currentStatus = art?.orders[art?.orders?.length - 1]?.status
 
-  console.log("images", images)
   return (
     <Page>
       <Section>
@@ -339,7 +345,7 @@ const Edit = ({ art }) => {
                                       type="number"
                                       min="0"
                                       step="1.00"
-                                      disabled
+                                      // disabled
                                     />
                                   </div>
                                 </div>
@@ -348,7 +354,7 @@ const Edit = ({ art }) => {
                                     type="checkbox"
                                     name="pricing.rent.forbid"
                                     className="flex-shrink-0 !mt-0"
-                                    disabled
+                                    // disabled
                                   />
                                   <span>I don't want to rent this peice</span>
                                 </label>
@@ -374,7 +380,7 @@ const Edit = ({ art }) => {
                                       type="number"
                                       min="0"
                                       step="1.00"
-                                      disabled
+                                      // disabled
                                     />
                                   </div>
                                 </div>
@@ -383,7 +389,7 @@ const Edit = ({ art }) => {
                                     type="checkbox"
                                     name="pricing.buy.forbid"
                                     className="flex-shrink-0 !mt-0"
-                                    disabled
+                                    // disabled
                                   />
                                   <span>I don't want to sell this peice</span>
                                 </label>
@@ -452,6 +458,7 @@ export async function getStaticProps({ params }) {
           type
           price
           priceId
+          forbid
         }
         dimensions
         materials
@@ -476,6 +483,7 @@ export async function getStaticProps({ params }) {
               type
               price
               priceId
+              forbid
             }
             dimensions
             images {

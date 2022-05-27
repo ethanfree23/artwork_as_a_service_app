@@ -89,10 +89,12 @@ const Create = () => {
       pricing: [
         {
           price: parseInt(values?.pricing?.rent?.price * 100),
+          forbid: values?.pricing?.rent?.forbid,
           type: "rent",
         },
         {
           price: parseInt(values?.pricing?.buy?.price * 100),
+          forbid: values?.pricing?.buy?.forbid,
           type: "buy",
         },
       ],

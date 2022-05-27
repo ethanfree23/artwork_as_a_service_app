@@ -56,26 +56,26 @@ module.exports = {
       }
     },
     afterCreate: async (data) => {
-      // await strapi.plugins["email"].services.email.send({
-      //   to: data.buyer.email,
-      //   from: "Freeman Art Company <mailgun@sandbox00419944efc843a585c50d4d5822cc9c.mailgun.org>",
-      //   subject: `Thank you for your order!`,
-      //   template: "new-order",
-      //   "h:X-Mailgun-Variables": JSON.stringify({
-      //     id: data.id,
-      //     fullName: data.buyer.fullName,
-      //   }),
-      // });
-      // await strapi.plugins["email"].services.email.send({
-      //   to: data.artist.email,
-      //   from: "Freeman Art Company <mailgun@sandbox00419944efc843a585c50d4d5822cc9c.mailgun.org>",
-      //   subject: `New Order! Someone has just ordered one of your pieces`,
-      //   template: "new-order-artist",
-      //   "h:X-Mailgun-Variables": JSON.stringify({
-      //     id: data.id,
-      //     fullName: data.artist.fullName,
-      //   }),
-      // });
+      await strapi.plugins["email"].services.email.send({
+        to: data.buyer.email,
+        from: "Freeman Art Company <mail@freemanartcompany.com>",
+        subject: `Thank you for your order!`,
+        template: "new-order",
+        "h:X-Mailgun-Variables": JSON.stringify({
+          id: data.id,
+          fullName: data.buyer.fullName,
+        }),
+      });
+      await strapi.plugins["email"].services.email.send({
+        to: data.artist.email,
+        from: "Freeman Art Company <mail@freemanartcompany.com>",
+        subject: `New Order! Someone has just ordered one of your pieces`,
+        template: "new-order-artist",
+        "h:X-Mailgun-Variables": JSON.stringify({
+          id: data.id,
+          fullName: data.artist.fullName,
+        }),
+      });
     },
   },
 };
