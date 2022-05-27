@@ -6,7 +6,7 @@ import { gql, useQuery } from "@apollo/client"
 import { AuthContext } from "pages/_app"
 import { useContext, useState } from "react"
 import { meArtistQuery } from "resources/artist"
-import { omit } from "lodash"
+import { omit, isEmpty, orderBy, isEqual } from "lodash"
 
 import { Form, Formik, Field as FormikField, ErrorMessage } from "formik"
 import * as Yup from "yup"
@@ -20,41 +20,37 @@ import { API } from "utils/api"
 import { PaintingEmptyIcon, PlusIcon } from "assets/icons"
 import cns from "classnames"
 
-const createFile = async ({ url, ...rest }) => {
+const createFile = async ({ url }, name) => {
   let response = await fetch(url)
   let data = await response.blob()
   let metadata = {
     type: "image/jpeg",
   }
-  let file = new File([data], "test.jpg", metadata)
+  let file = new File([data], name, metadata)
   return await file
 }
 
-const Edit = ({ art, ...rest }) => {
-  console.log("rest", rest)
-  // const [files, setFiles] = useState([])
-
-  // const initialFiles = await art?.images.map(async (image) => await createFile(image.url))
-
-  // console.log(initialFiles)
-
-  // const getFiles = async () => {
-  //   await createFile(art.images[0])
-  //   // return await createFile(images[0].url)
-  //   // return art?.images.map(async (image) => await createFile(image.url))
-  // }
-
-  // const test = getFiles(art.images)
-  // console.log("test", test)
+const Edit = ({ art }) => {
   const [images, setImages] = useState([])
-  const [previewImages, setPreviewImages] = useState(art?.images.map((image) => image.url))
+  const [previewImages, setPreviewImages] = useState(orderBy(art?.images, "name", "desc").map((image) => image.url))
   const { auth } = useContext(AuthContext)
 
+  console.log("art?.images", art?.images)
+
   let initalImageFiles
+
+  const getData = async () => {
+    return Promise.all(
+      art.images.map(async (image, index) => await createFile(image, `${art.title}-image-${index}.jpg`))
+    )
+  }
+
   useEffect(async () => {
     // initalImageFiles = await createFile(art.images[0])
-    initalImageFiles = await art.images.map(async (image) => await createFile(image))
-    setImages([initalImageFiles])
+    // const initialFiles = await art.images.map(async (image) => await createFile(image))
+    // initalImageFiles = await art.images.map(async (image) => await createFile(image))
+    initalImageFiles = await getData()
+    setImages(initalImageFiles)
   }, [])
 
   const canEdit =
@@ -64,12 +60,8 @@ const Edit = ({ art, ...rest }) => {
   //TODO: Maybe include this with getMe
   // const { data: artistData } = useQuery(meArtistQuery, { variables: { userId: 14 } })
   const { data: artistData } = useQuery(meArtistQuery, { variables: { userId: auth?.me?.id } })
-  // console.log("artistData", artistData)
   const artist = artistData?.user?.artist
   const artistId = artist?.id
-
-  console.log("artistData", artistData)
-  console.log("art", art)
 
   const initialBuyPrice = art.pricing.find((price) => price.type === "buy")
   const initialRentPrice = art.pricing.find((price) => price.type === "rent")
@@ -142,6 +134,7 @@ const Edit = ({ art, ...rest }) => {
       formData.append("files", image)
     })
 
+    console.log("IMAGES", images)
     if (images.length > 0) {
       axios
         .post(`${API}/upload`, formData, {
@@ -204,11 +197,13 @@ const Edit = ({ art, ...rest }) => {
   const emptySpaces = empties > 0 ? Array(4 - subImages.length).fill(<div></div>) : []
 
   const currentStatus = art?.orders[art?.orders?.length - 1]?.status
+
+  console.log("images", images)
   return (
     <Page>
       <Section>
         <h1 className="text-center font-bold text-3xl mb-2">Edit your piece</h1>
-        <h2 className="text-center mb-12">
+        <h2 className="text-center mb-12 text-red">
           {!canEdit && `Status: ${currentStatus} - ${!canEdit ? "You cannot edit this piece right now" : ""}`}
         </h2>
         {/* TODO: Move into Formik */}
@@ -229,7 +224,24 @@ const Edit = ({ art, ...rest }) => {
                           className="absolute w-full h-full cursor-pointer flex items-center justify-center"
                         >
                           {mainImage ? (
-                            <img src={mainImage} className="object-cover w-full h-full" />
+                            <>
+                              {canEdit && (
+                                <div
+                                  className="absolute top-1 right-1 bg-white rounded-md px-1 text-xs text-red-500 z-50"
+                                  onClick={(evt) => {
+                                    evt.preventDefault()
+                                    const newImages = images.filter((image, imageIndex) => 0 !== imageIndex)
+                                    const newPreviewImages = previewImages.filter((imageUrl) => imageUrl !== mainImage)
+                                    setImages(newImages)
+                                    // orderBy(newPreviewImages, "name", "desc").map((image) => image.url)
+                                    setPreviewImages(newPreviewImages)
+                                  }}
+                                >
+                                  X
+                                </div>
+                              )}
+                              <img src={mainImage} className="object-cover w-full h-full" />
+                            </>
                           ) : (
                             <div className="flex flex-col items-center justify-center gap-5">
                               <PaintingEmptyIcon />
@@ -242,9 +254,25 @@ const Edit = ({ art, ...rest }) => {
                       </div>
                       <div className="grid grid-cols-[repeat(auto-fit,100px)] gap-4 h-24 justify-center">
                         {(subImages || [])?.map((url, index) => (
-                          <label key={index} className="border border-grey" htmlFor="files">
-                            <img src={url} className="object-cover h-full w-full" />
-                          </label>
+                          <>
+                            <label key={index} className="border border-grey relative" htmlFor="files">
+                              {canEdit && (
+                                <div
+                                  className="cursor-pointer absolute top-1 right-1 bg-white rounded-md px-1 text-xs text-red-500 z-50"
+                                  onClick={(evt) => {
+                                    evt.preventDefault()
+                                    const newImages = images.filter((image, imageIndex) => index + 1 !== imageIndex)
+                                    const newPreviewImages = previewImages.filter((imageUrl) => imageUrl !== url)
+                                    setImages(newImages)
+                                    setPreviewImages(newPreviewImages)
+                                  }}
+                                >
+                                  X
+                                </div>
+                              )}
+                              <img src={url} className="object-cover h-full w-full" />
+                            </label>
+                          </>
                         ))}
                         {emptySpaces?.map((space, index) => (
                           <label
@@ -256,15 +284,17 @@ const Edit = ({ art, ...rest }) => {
                           </label>
                         ))}
                       </div>
-                      <input
-                        type="file"
-                        id="files"
-                        name="files"
-                        onChange={onImageChange}
-                        alt="image"
-                        accept="image/*"
-                        className="hidden"
-                      />
+                      {canEdit && (
+                        <input
+                          type="file"
+                          id="files"
+                          name="files"
+                          onChange={onImageChange}
+                          alt="image"
+                          accept="image/*"
+                          className="hidden"
+                        />
+                      )}
                     </form>
                   </div>
                   <div className="flex-1 space-y-3">
@@ -429,6 +459,7 @@ export async function getStaticProps({ params }) {
         subject
         images {
           url
+          created_at
         }
         artist {
           id

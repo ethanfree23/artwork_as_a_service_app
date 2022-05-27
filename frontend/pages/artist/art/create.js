@@ -180,7 +180,22 @@ const Create = () => {
                           className="absolute w-full h-full cursor-pointer flex items-center justify-center"
                         >
                           {mainImage ? (
-                            <img src={mainImage} className="object-cover w-full h-full" />
+                            <>
+                              <div
+                                className="absolute top-1 right-1 bg-white rounded-md px-1 text-xs text-red-500 z-50"
+                                onClick={(evt) => {
+                                  evt.preventDefault()
+                                  const newImages = images.filter((image, imageIndex) => 0 !== imageIndex)
+                                  const newPreviewImages = previewImages.filter((imageUrl) => imageUrl !== mainImage)
+                                  setImages(newImages)
+                                  // orderBy(newPreviewImages, "name", "desc").map((image) => image.url)
+                                  setPreviewImages(newPreviewImages)
+                                }}
+                              >
+                                X
+                              </div>
+                              <img src={mainImage} className="object-cover w-full h-full" />
+                            </>
                           ) : (
                             <div className="flex flex-col items-center justify-center gap-5">
                               <PaintingEmptyIcon />
@@ -193,7 +208,19 @@ const Create = () => {
                       </div>
                       <div className="grid grid-cols-[repeat(auto-fit,100px)] gap-4 h-24 justify-center">
                         {(subImages || [])?.map((url, index) => (
-                          <label key={index} className="border border-grey" htmlFor="files">
+                          <label key={index} className="border border-grey relative" htmlFor="files">
+                            <div
+                              className="cursor-pointer absolute top-1 right-1 bg-white rounded-md px-1 text-xs text-red-500 z-50"
+                              onClick={(evt) => {
+                                evt.preventDefault()
+                                const newImages = images.filter((image, imageIndex) => index + 1 !== imageIndex)
+                                const newPreviewImages = previewImages.filter((imageUrl) => imageUrl !== url)
+                                setImages(newImages)
+                                setPreviewImages(newPreviewImages)
+                              }}
+                            >
+                              X
+                            </div>
                             <img src={url} className="object-cover h-full w-full" />
                           </label>
                         ))}
