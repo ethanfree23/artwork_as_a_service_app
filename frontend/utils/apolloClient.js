@@ -41,6 +41,7 @@ export const useQuery = async (query, variables) => {
   return await client.query({
     query: query,
     variables: variables,
+    fetchPolicy: "network-only",
   })
 }
 
