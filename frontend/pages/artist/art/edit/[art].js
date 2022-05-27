@@ -59,7 +59,10 @@ const Edit = ({ art }) => {
   // if (auth?.me?.id === undefined) return null
   //TODO: Maybe include this with getMe
   // const { data: artistData } = useQuery(meArtistQuery, { variables: { userId: 14 } })
-  const { data: artistData } = useQuery(meArtistQuery, { variables: { userId: auth?.me?.id } })
+  const { data: artistData } = useQuery(meArtistQuery, {
+    variables: { userId: auth?.me?.id },
+    fetchPolicy: "cache-and-network",
+  })
   const artist = artistData?.user?.artist
   const artistId = artist?.id
 
@@ -345,7 +348,7 @@ const Edit = ({ art }) => {
                                       type="number"
                                       min="0"
                                       step="1.00"
-                                      // disabled
+                                      disabled={!canEdit}
                                     />
                                   </div>
                                 </div>
@@ -354,7 +357,7 @@ const Edit = ({ art }) => {
                                     type="checkbox"
                                     name="pricing.rent.forbid"
                                     className="flex-shrink-0 !mt-0"
-                                    // disabled
+                                    disabled={!canEdit}
                                   />
                                   <span>I don't want to rent this peice</span>
                                 </label>
@@ -380,7 +383,7 @@ const Edit = ({ art }) => {
                                       type="number"
                                       min="0"
                                       step="1.00"
-                                      // disabled
+                                      disabled={!canEdit}
                                     />
                                   </div>
                                 </div>
@@ -389,7 +392,7 @@ const Edit = ({ art }) => {
                                     type="checkbox"
                                     name="pricing.buy.forbid"
                                     className="flex-shrink-0 !mt-0"
-                                    // disabled
+                                    disabled={!canEdit}
                                   />
                                   <span>I don't want to sell this peice</span>
                                 </label>
