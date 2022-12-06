@@ -32,7 +32,7 @@ const WHAT_WE_DO = [
   {
     icon: SellIcon,
     title: "Sell art, keep the money.",
-    description: "Finally! A gallery that gives you exposure at only 15% commission.",
+    description: "Finally, a gallery that gives you exposure at only 15% commission.",
   },
 ]
 
