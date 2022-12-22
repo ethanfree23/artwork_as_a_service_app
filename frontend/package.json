@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    // "prepare": "cd .. && husky install frontend/.husky",
+    "prepare": "cd .. && husky install frontend/.husky",
     "check-format": "prettier --check .",
     "check-lint": "eslint . --ext ts --ext tsx --ext js",
     "format": "prettier --write . --list-different",
