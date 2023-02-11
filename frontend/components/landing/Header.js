@@ -12,8 +12,8 @@ const Header = () => {
           The Modern Way to Gallery
         </h1>
         <p as="p" className="max-w-xl text-white mt-4 mb-4 font-light">
-          An art gallery designed for the modern artists. Market your art, build your brand, and establish yourself on
-          your own terms.
+          An art as a service platform for businesses and individuals. <br />
+          Keep your space fresh and buy when you fall in love.
         </p>
         <LandingHeaderIllustration className="hidden md:flex mt-10 w-full max-w-3xl" />
         <CharacterOneIllustration className="flex md:hidden pt-4 pb-16 w-3/4 max-w-[360px]" />

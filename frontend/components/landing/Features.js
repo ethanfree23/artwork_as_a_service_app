@@ -7,13 +7,13 @@ import { PalettePolygonIcon, GalleryPolygonIcon, MoneyPolygonIcon } from "assets
 const FEATURES = [
   {
     icon: PalettePolygonIcon,
-    title: "Micro-Entrepreneurs",
-    description: "Our platform provides you with the tools that will help you make a living from what you love.",
+    title: "Fresh Fine Art",
+    description: "Experience more art and keep what you love.",
   },
   {
     icon: MoneyPolygonIcon,
-    title: "Monthly Income",
-    description: "Earn in new ways. Through rentals, you can establish monthly income while marketing to more people.",
+    title: "Monthly Cycles",
+    description: "Keeps prices reasonable for collectors, earns more money for artists. Win win.",
   },
   {
     icon: GalleryPolygonIcon,

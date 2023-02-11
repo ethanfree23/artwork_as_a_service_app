@@ -1,27 +1,27 @@
 import { Section } from "components/app"
 import { AnimatedItem } from "components/utils"
 
-import { ConnectIcon, FinanceIcon, LikesIcon, PartnerIcon, RotateIcon, SellIcon } from "assets/icons"
+import { ConnectIcon, FinanceIcon, LikesIcon, PartnerIcon, RotateIcon, SellIcon, GrowIcon } from "assets/icons"
 
 const WHAT_WE_DO = [
   {
     icon: LikesIcon,
-    title: "Earn monthly.",
+    title: "Local artists and spaces.",
     description: "Every piece you have rented out means monthly income you can count on.",
   },
   {
     icon: PartnerIcon,
-    title: "The business partner you need.",
+    title: "Free to use!",
     description: "Keep track of sales and easily manage inventory.",
   },
   {
     icon: RotateIcon,
-    title: "Rotate your art.",
+    title: "Plan exhbitions.",
     description: "Why limit your sales to purchases? How about renting your art?",
   },
   {
     icon: ConnectIcon,
-    title: "Connect with artists and buyers alike.",
+    title: "Make sales.",
     description: "Go direct to the source without having a middleman. Get to know artists directly.",
   },
   // {
@@ -32,7 +32,12 @@ const WHAT_WE_DO = [
   {
     icon: SellIcon,
     title: "Sell art, keep the money.",
-    description: "Finally, a gallery that gives you exposure at only 15% commission.",
+    description: "Finally! A gallery that gives you exposure at only 20% commission.",
+  },
+  {
+    icon: GrowIcon,
+    title: "Grow your brand.",
+    description: "With exposure in so many ways and places, you are able to grow your brand directly.",
   },
 ]
 
@@ -53,7 +58,7 @@ const WhatWeDo = () => {
     <Section animateOnReveal>
       {/* <AnimatedItem> */}
       <AnimatedItem as="h2" className="text-4xl uppercase font-bold text-center">
-        What we do
+        How it works
       </AnimatedItem>
       {/* </AnimatedItem> */}
       <div className="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-16 px-4 lg:px-0">

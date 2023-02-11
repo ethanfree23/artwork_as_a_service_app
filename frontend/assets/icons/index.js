@@ -28,6 +28,7 @@ export { default as PlusIcon } from "./plus.svg"
 
 export { default as EarningsIcon } from "./earnings.svg"
 export { default as GraphIcon } from "./graph.svg"
+export { default as GrowIcon } from "./grow.svg"
 
 export { default as SuccessIcon } from "./check-circle.svg"
 export { default as WarningIcon } from "./warning.svg"
