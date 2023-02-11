@@ -25,7 +25,7 @@ const Gallery = ({ artists }) => {
 export async function getStaticProps() {
   const query = gql`
     query Query {
-      artists {
+      artists(sort: "created_at:desc") {
         id
         fullName
         location

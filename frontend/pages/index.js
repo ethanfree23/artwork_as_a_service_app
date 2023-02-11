@@ -55,7 +55,7 @@ const Home = ({ artists, podcasts }) => {
 export async function getStaticProps() {
   const query = gql`
     query Query {
-      artists(limit: 4) {
+      artists(limit: 4, sort: "created_at:desc") {
         id
         fullName
         location
